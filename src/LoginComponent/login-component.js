@@ -8,6 +8,7 @@ const LoginComponent = () => {
   const passwordChangeHandler = ($event) => setPassword($event.target.value);
 
   const submitFormHandler = ($event) => {
+    console.log(process.env);
     $event.preventDefault();
     if (username === "rahulpandey862@gmail.com" && password === "rahul@123") {
       clearState();
@@ -20,7 +21,6 @@ const LoginComponent = () => {
   };
 
   return (
-    <>
       <form onSubmit={submitFormHandler}>
         <div className="container-fluid">
           <div className="row">
@@ -29,7 +29,7 @@ const LoginComponent = () => {
               <input
                 name="username"
                 type="email"
-                value={username}
+                value={process.env.REACT_APP_NOT_SECRET_CODE}
                 onChange={nameChangeHandler}
                 className="form-control"
                 placeholder="Please Enter UserName"
@@ -60,7 +60,6 @@ const LoginComponent = () => {
           </div>
         </div>
       </form>
-    </>
   );
 };
 
