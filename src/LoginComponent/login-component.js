@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./login-component.css";
 
 const LoginComponent = () => {
@@ -7,6 +8,7 @@ const LoginComponent = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [disabled, setLoginButtonDisabled] = useState(false);
+  const history = useHistory();
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -64,11 +66,9 @@ const LoginComponent = () => {
       .then(async (data) => {
         debugger;
         let response = await data.json();
-        console.json(response);
+        history.push('/home');
       })
-      .catch((error) => {
-
-      });
+      .catch((error) => {});
 
     clearState();
   };
@@ -115,9 +115,7 @@ const LoginComponent = () => {
           </button>
         </div>
         <div className="row">
-          <div className="col-md-4 offset-4">
-            <a href="">Forgot Password</a>
-          </div>
+          <div className="col-md-4 offset-4"></div>
         </div>
       </div>
     </form>

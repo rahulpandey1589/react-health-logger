@@ -3,7 +3,7 @@ const RegisterComponent = () => {
     <div className="container-fluid">
       <form>
         <div className="row col-md-4 offset-2">
-          <label for="username">UserName</label>
+          <label htmlFor="username">UserName</label>
           <input
             name="username"
             type="text"
@@ -11,9 +11,9 @@ const RegisterComponent = () => {
             className="form-control"
           />
           <br />
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
-            for="password"
+            htmlFor="password"
             type="password"
             placeholder="Please Enter Password"
             className="form-control"

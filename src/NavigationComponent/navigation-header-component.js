@@ -7,7 +7,7 @@ const NavigationComponent = () => {
   return (
     <>
       <div className="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <nav className="navbar navbar-expand-lg navbar-light bg-info">
           <ul>
             <li>
               <Link to={"/login"} className="nav-link">
