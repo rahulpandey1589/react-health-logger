@@ -6,6 +6,8 @@ const LoginComponent = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [disabled, setLoginButtonDisabled] = useState(false);
+
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -28,8 +30,10 @@ const LoginComponent = () => {
   const validateUserName = (value) => {
     if (!value.includes("@")) {
       setEmailError("The entered email address is not in correct format.");
+      setLoginButtonDisabled(true);
     } else {
       setEmailError("");
+      setLoginButtonDisabled(false);
     }
   };
 
@@ -38,8 +42,10 @@ const LoginComponent = () => {
       setPasswordError(
         "Password should be greater than 5 character and should be less than 15."
       );
+      setLoginButtonDisabled(true);
     } else {
       setPasswordError("");
+      setLoginButtonDisabled(false);
     }
   };
 
@@ -85,7 +91,11 @@ const LoginComponent = () => {
         </div>
         <br />
         <div className="row col-md-4 offset-2">
-          <button type="submit" className="btn btn-primary">
+          <button
+            disabled={disabled}
+            type="submit"
+            className="btn btn-primary"
+          >
             Login
           </button>
         </div>
