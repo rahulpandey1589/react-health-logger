@@ -8,7 +8,6 @@ const LoginComponent = () => {
   const [passwordError, setPasswordError] = useState("");
   const [disabled, setLoginButtonDisabled] = useState(false);
 
-
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -51,6 +50,26 @@ const LoginComponent = () => {
 
   const handleFormSubmit = ($event) => {
     $event.preventDefault();
+    fetch(
+      `${process.env.REACT_APP_LOGIN_URL}${process.env.REACT_APP_API_KEY}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: username,
+          password: password,
+          returnSecureToken: true,
+        }),
+      }
+    )
+      .then(async (data) => {
+        debugger;
+        let response = await data.json();
+        console.json(response);
+      })
+      .catch((error) => {
+
+      });
+
     clearState();
   };
 
@@ -91,11 +110,7 @@ const LoginComponent = () => {
         </div>
         <br />
         <div className="row col-md-4 offset-2">
-          <button
-            disabled={disabled}
-            type="submit"
-            className="btn btn-primary"
-          >
+          <button disabled={disabled} type="submit" className="btn btn-primary">
             Login
           </button>
         </div>
