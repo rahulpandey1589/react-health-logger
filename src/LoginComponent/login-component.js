@@ -4,14 +4,38 @@ const LoginComponent = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  const nameChangeHandler = ($event) => setUserName($event.target.value);
-  const passwordChangeHandler = ($event) => setPassword($event.target.value);
+  let errors = {
+    username: "",
+    password: "",
+  };
 
-  const submitFormHandler = ($event) => {
-    $event.preventDefault();
-    if (username === "rahulpandey862@gmail.com" && password === "rahul@123") {
-      clearState();
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+
+    switch (name) {
+      case "username":
+        setUserName(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      default:
+        break;
     }
+  };
+
+  const validate = () =>{
+    let userNameError="";
+
+    if(!username.includes('@')){
+      userNameError='Invalid email';
+    }
+  }
+
+  const handleFormSubmit = ($event) => {
+    $event.preventDefault();
+    
   };
 
   const clearState = () => {
@@ -20,31 +44,31 @@ const LoginComponent = () => {
   };
 
   return (
-    <form onSubmit={submitFormHandler}>
+    <form onSubmit={handleFormSubmit}>
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-8 offset-2">
             <label name="username">UserName</label>
             <input
               name="username"
-              type="email"
-              value={process.env.REACT_APP_NOT_SECRET_CODE}
-              onChange={nameChangeHandler}
+              type="text"
+              value={username}
+              onChange={handleChange}
               className="form-control"
               placeholder="Please Enter UserName"
             />
+            {errors.username.length > 0 && <span>{errors.username}</span>}
             <br />
             <label name="password">Password</label>
             <input
               name="password"
               type="password"
               value={password}
-              minLength="8"
-              maxLength="16"
-              onChange={passwordChangeHandler}
+              onChange={handleChange}
               className="form-control"
               placeholder="Please Enter Password"
             />
+            {errors.password.length > 0 && <span>{errors.password}</span>}
           </div>
         </div>
         <div className="row">
