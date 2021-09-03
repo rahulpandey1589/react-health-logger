@@ -4,13 +4,14 @@ import LoginComponent from "../LoginComponent/login-component";
 import RegisterComponent from "../LoginComponent/register-component";
 
 import { Navbar, Nav, Container } from "react-bootstrap";
+import App from "../App";
 
 const NavigationComponent = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to={"/login"}>Health Logger</Navbar.Brand>
+          <Navbar.Brand>Health Logger</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link to="#home">Home</Nav.Link>
             <Nav.Link as={Link} to={"/login"}>Login</Nav.Link>
