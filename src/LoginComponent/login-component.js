@@ -7,7 +7,6 @@ const LoginComponent = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [disabled, setLoginButtonDisabled] = useState(false);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -31,10 +30,9 @@ const LoginComponent = () => {
   const validateUserName = (value) => {
     if (!value.includes("@")) {
       setEmailError("The entered email address is not in correct format.");
-      setLoginButtonDisabled(true);
     } else {
       setEmailError("");
-      setLoginButtonDisabled(false);
+      console.log(`Email error count is ${emailError.length}`);
     }
   };
 
@@ -43,10 +41,10 @@ const LoginComponent = () => {
       setPasswordError(
         "Password should be greater than 5 character and should be less than 15."
       );
-      setLoginButtonDisabled(true);
     } else {
       setPasswordError("");
-      setLoginButtonDisabled(false);
+
+      console.log(`Email error count is ${passwordError.length}`);
     }
   };
 
@@ -64,9 +62,10 @@ const LoginComponent = () => {
       }
     )
       .then(async (data) => {
-        debugger;
         let response = await data.json();
-        history.push('/home');
+        if (response.ok) {
+          history.push("/home");
+        }
       })
       .catch((error) => {});
 
@@ -110,7 +109,7 @@ const LoginComponent = () => {
         </div>
         <br />
         <div className="row col-md-4 offset-2">
-          <button disabled={disabled} type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Login
           </button>
         </div>
