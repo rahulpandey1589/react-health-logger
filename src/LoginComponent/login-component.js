@@ -32,7 +32,6 @@ const LoginComponent = () => {
       setEmailError("The entered email address is not in correct format.");
     } else {
       setEmailError("");
-      console.log(`Email error count is ${emailError.length}`);
     }
   };
 
@@ -43,8 +42,6 @@ const LoginComponent = () => {
       );
     } else {
       setPasswordError("");
-
-      console.log(`Email error count is ${passwordError.length}`);
     }
   };
 
@@ -79,7 +76,7 @@ const LoginComponent = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="container-fluid">
+      <div className="container center">
         <div className="row col-md-4 offset-2">
           <label name="username">UserName</label>
           <input
