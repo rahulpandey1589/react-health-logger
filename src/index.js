@@ -5,6 +5,7 @@ import "./index.css";
 import NavigationComponent from "./NavigationComponent/navigation-header-component";
 import { BrowserRouter } from "react-router-dom";
 
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
