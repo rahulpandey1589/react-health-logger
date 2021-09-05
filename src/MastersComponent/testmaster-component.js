@@ -1,9 +1,24 @@
-import { getDatabase, ref, onValue } from "firebase/database";
+import { useEffect, useState } from "react";
 
 const TestMasterComponentList = () => {
-  const db = getDatabase();
+  const [tests,setTests] = useState([]);
+  
+  useEffect(() => {
+    loadAllTest();
+  }, []);
 
-  const testMasterRef = ref(db, "laboratorytest/");
+  const loadAllTest = () => {
+    fetch(`${process.env.REACT_APP_ROUTE_URL}/laboratorytest.json`)
+   //fetch('https://jsonplaceholder.typicode.com/users/')  
+   .then((response) => {
+     debugger;
+        return response.json();
+      })
+      .then((result) => {
+        setTests(result);
+        console.log(tests);
+      });
+  };
 
   return (
     <div>
