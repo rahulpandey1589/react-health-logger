@@ -1,6 +1,7 @@
-import TestMasterDataService from "../Services/test-master-service";
+import TestMasterDataService  from '../Services/test-master-service';
 
 const AddNewTestComponent = () => {
+  
   const addNewTestHandler = () => {
     const testObj = [
       {
@@ -19,7 +20,8 @@ const AddNewTestComponent = () => {
       },
     ];
 
-    TestMasterDataService.create(testObj);
+   TestMasterDataService.create();
+    alert("Results Saved!!!");
   };
 
   return (
