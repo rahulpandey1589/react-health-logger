@@ -24,7 +24,6 @@ const AddNewTestComponent = () => {
 
   return (
     <>
-      <div></div>
       <button onClick={addNewTestHandler}>Add New Test</button>
     </>
   );
