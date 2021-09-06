@@ -3,8 +3,9 @@ import { Link, Route, Switch } from "react-router-dom";
 import HomeComponent from "../HomeComponent/home-component";
 import LoginComponent from "../LoginComponent/login-component";
 import RegisterComponent from "../LoginComponent/register-component";
-import { Navbar, Nav, Container,NavDropdown } from "react-bootstrap";
-import TestMasterComponentList from "../MastersComponent/testmaster-component";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import ListExistingTestComponent from "../MastersComponent/list-test";
+import AddNewTestComponent from "../MastersComponent/add-test";
 
 const NavigationComponent = () => {
   return (
@@ -16,7 +17,13 @@ const NavigationComponent = () => {
           </Navbar.Brand>
           <Nav className="me-auto">
             <NavDropdown title="Masters" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to={'/masters/list-all-test'}>Test</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/masters/create-new-test"}>
+               Create New Test
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/masters/list-all-test"}>
+                List All Test
+              </NavDropdown.Item>
+
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
@@ -39,7 +46,14 @@ const NavigationComponent = () => {
         <Route path="/login" component={LoginComponent}></Route>
         <Route path="/register" component={RegisterComponent}></Route>
         <Route path="/home" component={HomeComponent}></Route>
-        <Route path="/masters/list-all-test" component={TestMasterComponentList}></Route>
+        <Route
+          path="/masters/create-new-test"
+          component={AddNewTestComponent}
+        ></Route>
+        <Route
+          path="/masters/list-all-test"
+          component={ListExistingTestComponent}
+        ></Route>
       </Switch>
     </>
   );
