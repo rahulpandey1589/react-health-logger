@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import firebase from "../firebase";
+import ButtonComponent from "../SharedComponent/button-component";
 
 const ListExistingTestComponent = () => {
-  const [masters, setMasters] = useState();
+  const [masters, setMasters] = useState([]);
 
   useEffect(() => {
     loadAllTest();
-    console.log('I am loaded');
-    console.log(masters);
+    console.log("I am loaded");
   }, []);
 
   const loadAllTest = () => {
@@ -16,7 +16,8 @@ const ListExistingTestComponent = () => {
       const response = snapshot.val();
       const masterList = [];
       for (let id in response) {
-        masterList.push(response[id]);
+        debugger;
+        masterList.push({ id, ...response[id] });
       }
       setMasters(masterList);
     });
@@ -25,25 +26,45 @@ const ListExistingTestComponent = () => {
   return (
     <>
       <div className="container">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {masters != undefined &&
-              masters.map((item) => (
-                <tr>
-                  <td>{item.Title}</td>
-                  <td>{item.Description}</td>
-                  <td>{item.Price}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <div className="col-md-4 offset-8">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search..."
+          ></input>
+        </div>
+        <br />
+        {
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th colSpan="3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {masters !== undefined &&
+                masters.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.Title}</td>
+                    <td>{item.Description}</td>
+                    <td>{item.Price}</td>
+                    <td>
+                      <ButtonComponent className="btn btn-primary" />
+                    </td>
+                    <td>
+                      <ButtonComponent className="btn btn-success" />
+                    </td>
+                    <td>
+                      <ButtonComponent className="btn btn-danger" />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        }
       </div>
     </>
   );
