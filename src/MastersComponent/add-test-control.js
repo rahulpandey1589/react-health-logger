@@ -1,4 +1,39 @@
-const  AddTestControl = () => {
+import { useState } from "react";
+import firebase from "../firebase";
+
+const AddTestControl = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+
+  const onChangeHandler = (event) => {
+    event.preventDefault();
+    
+    const { name, value } = event.target;
+    switch (name) {
+      case "title":
+        setTitle(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      case "price":
+        setPrice(value);
+        break;
+      case "category":
+        setCategory(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const add = () => {
+    const testMasterRef = firebase.ref("TestMaster");
+    testMasterRef.push("");
+  };
+
   return (
     <>
       <div className="row">
@@ -23,31 +58,37 @@ const  AddTestControl = () => {
             className="form-control"
             name="title"
             type="text"
+            value={title}
+            onChange={onChangeHandler}
             placeholder="Title"
           ></input>
         </div>
       </div>
       <div className="row">
         <div className="col-md-2">
-          <label for="description">Description</label>
+          <label htmlFor="description">Description</label>
         </div>
         <div className="col-md-4">
           <input
             className="form-control"
             type="text"
             name="description"
+            value={description}
+            onChange={onChangeHandler}
             placeholder="Please enter description"
           ></input>
         </div>
       </div>
       <div className="row">
         <div className="col-md-2">
-          <label for="title">Price</label>
+          <label htmlFor="title">Price</label>
         </div>
         <div className="col-md-4">
           <input
             className="form-control"
             type="number"
+            value={price}
+            onChange={onChangeHandler}
             placeholder="Please enter price"
           ></input>
         </div>
