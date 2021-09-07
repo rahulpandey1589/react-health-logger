@@ -1,26 +1,23 @@
-import {useState} from 'react' 
+import { useState } from "react";
 import ButtonComponent from "../../SharedComponent/button-component";
 import firebase from "../../firebase";
 
 const AddCategoryComponent = () => {
+  const [category, setCategory] = useState("");
 
-  const [category,setCategory] = useState('');
+  const categoryDbRef = firebase.ref("Category");
 
-  const categoryDbRef= firebase.ref('Category');
-   
-  const categoryChangeHandler = ($event) =>{
-      setCategory($event.target.value);
-  }
+  const categoryChangeHandler = ($event) => {
+    setCategory($event.target.value);
+  };
 
-  const addCategory =() =>{
-
-    let categoryData={
-        CategoryName:category,
-        IsActive:true
-    }
+  const addCategory = () => {
+    let categoryData = {
+      CategoryName: category,
+      IsActive: true,
+    };
     categoryDbRef.push(categoryData);
-  }
-
+  };
 
   return (
     <>

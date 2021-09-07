@@ -4,8 +4,8 @@ import HomeComponent from "../HomeComponent/home-component";
 import LoginComponent from "../LoginComponent/login-component";
 import RegisterComponent from "../LoginComponent/register-component";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import ListExistingTestComponent from "../MastersComponent/list-test";
-import AddNewTestComponent from "../MastersComponent/add-test";
+import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/list-test";
+import AddNewTestComponent from "../MastersComponent/TestMasterComponent/add-test";
 import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category";
 
 const NavigationComponent = () => {

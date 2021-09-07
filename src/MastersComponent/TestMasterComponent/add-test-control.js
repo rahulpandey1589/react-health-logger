@@ -1,6 +1,6 @@
 import { useState } from "react";
-import firebase from "../firebase";
-import ButtonComponent from "../SharedComponent/button-component";
+import firebase from "../../firebase";
+import ButtonComponent from "../../SharedComponent/button-component";
 
 
 const AddTestControl = () => {
