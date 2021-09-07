@@ -2,6 +2,7 @@ const ButtonComponent = (props) => {
   const { className, label, isDisabled, id, onButtonClick } = props;
 
   const handleButtonClick = ($event) => {
+    $event.preventDefault();
     let newData ={id}
     onButtonClick(newData);
   };
