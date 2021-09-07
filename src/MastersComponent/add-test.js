@@ -1,4 +1,5 @@
 import TestMasterDataService from "../Services/test-master-service";
+import ButtonComponent from "../SharedComponent/button-component";
 
 const AddNewTestComponent = () => {
   const addNewTestHandler = () => {
@@ -24,7 +25,7 @@ const AddNewTestComponent = () => {
 
   return (
     <>
-      <button onClick={addNewTestHandler}>Add New Test</button>
+      <ButtonComponent label="Add New" className="btn btn-primary"></ButtonComponent>
     </>
   );
 };

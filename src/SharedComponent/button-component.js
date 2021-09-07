@@ -1,13 +1,20 @@
 const ButtonComponent = (props) => {
- 
-    const className = props.className; 
-    const textToDisplay= props.displayText;  
+  const { className, label, isDisabled, id, onButtonClick } = props;
 
-    console.log(textToDisplay);
-    return <>
-      <input type="button" className={className}>{textToDisplay}</input>
-    </>
+  const handleButtonClick = ($event) => {
+    let newData ={id}
+    onButtonClick(newData);
+  };
+
+  return (
+    <button
+      onClick={handleButtonClick}
+      disabled={isDisabled !== undefined ? isDisabled : false}
+      className={className}
+    >
+      {label}
+    </button>
+  );
 };
-
 
 export default ButtonComponent;

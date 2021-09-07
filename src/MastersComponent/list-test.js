@@ -7,8 +7,16 @@ const ListExistingTestComponent = () => {
 
   useEffect(() => {
     loadAllTest();
-    console.log("I am loaded");
   }, []);
+
+  const deleteHandler = (event) => {
+    console.log(event);
+    alert("Delete click handler called in parent component!!!");
+  };
+
+  const detailHandler = () => {
+    alert("Detail click handler called in parent component!!!");
+  };
 
   const loadAllTest = () => {
     const testMasterDbRef = firebase.ref("TestMaster");
@@ -16,7 +24,6 @@ const ListExistingTestComponent = () => {
       const response = snapshot.val();
       const masterList = [];
       for (let id in response) {
-        debugger;
         masterList.push({ id, ...response[id] });
       }
       setMasters(masterList);
@@ -52,13 +59,20 @@ const ListExistingTestComponent = () => {
                     <td>{item.Description}</td>
                     <td>{item.Price}</td>
                     <td>
-                      <ButtonComponent className="btn btn-primary" />
+                      <ButtonComponent
+                        className="btn btn-success"
+                        label="Details"
+                        id={item.id}
+                        onButtonClick={detailHandler}
+                      />
                     </td>
                     <td>
-                      <ButtonComponent className="btn btn-success" />
-                    </td>
-                    <td>
-                      <ButtonComponent className="btn btn-danger" />
+                      <ButtonComponent
+                        className="btn btn-danger"
+                        label="Delete"
+                        id={item.id}
+                        onButtonClick={deleteHandler}
+                      />
                     </td>
                   </tr>
                 ))}
