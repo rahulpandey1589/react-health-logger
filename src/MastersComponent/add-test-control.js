@@ -1,5 +1,7 @@
 import { useState } from "react";
 import firebase from "../firebase";
+import ButtonComponent from "../SharedComponent/button-component";
+
 
 const AddTestControl = () => {
   const [title, setTitle] = useState("");
@@ -29,9 +31,16 @@ const AddTestControl = () => {
     }
   };
 
-  const add = () => {
+  const addHandler = () => {
     const testMasterRef = firebase.ref("TestMaster");
-    testMasterRef.push("");
+    const data={
+      Title:title,
+      Category:'Blood Samples',
+      Price:485,
+      Description:description
+    }
+    
+    testMasterRef.push(data);
   };
 
   return (
@@ -93,6 +102,22 @@ const AddTestControl = () => {
           ></input>
         </div>
       </div>
+      <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-md-4">
+            <ButtonComponent
+              label="Add New"
+              className="btn btn-success"
+              onButtonClick={addHandler}
+            ></ButtonComponent>
+          </div>
+          <div className="col-md-4">
+            <ButtonComponent
+              label="View All"
+              className="btn btn-primary"
+            ></ButtonComponent>
+          </div>
+        </div>
     </>
   );
 };

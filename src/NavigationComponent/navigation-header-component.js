@@ -6,6 +6,7 @@ import RegisterComponent from "../LoginComponent/register-component";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import ListExistingTestComponent from "../MastersComponent/list-test";
 import AddNewTestComponent from "../MastersComponent/add-test";
+import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category";
 
 const NavigationComponent = () => {
   return (
@@ -18,13 +19,15 @@ const NavigationComponent = () => {
           <Nav className="me-auto">
             <NavDropdown title="Masters" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to={"/masters/create-new-test"}>
-               Create New Test
+                Create New Test
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to={"/masters/list-all-test"}>
                 List All Test
               </NavDropdown.Item>
 
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/masters/add-category"}>
+                Add New Category
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
@@ -53,6 +56,10 @@ const NavigationComponent = () => {
         <Route
           path="/masters/list-all-test"
           component={ListExistingTestComponent}
+        ></Route>
+         <Route
+          path="/masters/add-category"
+          component={AddCategoryComponent}
         ></Route>
       </Switch>
     </>

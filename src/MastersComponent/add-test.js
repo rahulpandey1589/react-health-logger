@@ -1,5 +1,4 @@
 import TestMasterDataService from "../Services/test-master-service";
-import ButtonComponent from "../SharedComponent/button-component";
 import AddTestControl from "./add-test-control";
 
 const AddNewTestComponent = () => {
@@ -29,21 +28,6 @@ const AddNewTestComponent = () => {
     <>
       <div className="container-fluid">
         <AddTestControl />
-        <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-4">
-            <ButtonComponent
-              label="Add New"
-              className="btn btn-success"
-            ></ButtonComponent>
-          </div>
-          <div className="col-md-4">
-            <ButtonComponent
-              label="View All"
-              className="btn btn-primary"
-            ></ButtonComponent>
-          </div>
-        </div>
       </div>
     </>
   );
