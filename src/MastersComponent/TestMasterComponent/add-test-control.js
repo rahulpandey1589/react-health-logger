@@ -1,7 +1,7 @@
 import { useState } from "react";
 import firebase from "../../firebase";
 import ButtonComponent from "../../SharedComponent/button-component";
-
+import CategoryDropdownComponent from "../CategoryMasterComponent/category-dropdown-component";
 
 const AddTestControl = () => {
   const [title, setTitle] = useState("");
@@ -11,7 +11,7 @@ const AddTestControl = () => {
 
   const onChangeHandler = (event) => {
     event.preventDefault();
-    
+
     const { name, value } = event.target;
     switch (name) {
       case "title":
@@ -33,13 +33,13 @@ const AddTestControl = () => {
 
   const addHandler = () => {
     const testMasterRef = firebase.ref("TestMaster");
-    const data={
-      Title:title,
-      Category:'Blood Samples',
-      Price:485,
-      Description:description
-    }
-    
+    const data = {
+      Title: title,
+      Category: "Blood Samples",
+      Price: 485,
+      Description: description,
+    };
+
     testMasterRef.push(data);
   };
 
@@ -50,12 +50,7 @@ const AddTestControl = () => {
           <label for="category">Category</label>
         </div>
         <div className="col-md-4">
-          <select className="form-select" aria-label="Default select example">
-            <option selected>Please select category</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+          <CategoryDropdownComponent></CategoryDropdownComponent>
         </div>
       </div>
       <div className="row">
@@ -103,21 +98,21 @@ const AddTestControl = () => {
         </div>
       </div>
       <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-4">
-            <ButtonComponent
-              label="Add New"
-              className="btn btn-success"
-              onButtonClick={addHandler}
-            ></ButtonComponent>
-          </div>
-          <div className="col-md-4">
-            <ButtonComponent
-              label="View All"
-              className="btn btn-primary"
-            ></ButtonComponent>
-          </div>
+        <div className="col-md-2"></div>
+        <div className="col-md-4">
+          <ButtonComponent
+            label="Add New"
+            className="btn btn-success"
+            onButtonClick={addHandler}
+          ></ButtonComponent>
         </div>
+        <div className="col-md-4">
+          <ButtonComponent
+            label="View All"
+            className="btn btn-primary"
+          ></ButtonComponent>
+        </div>
+      </div>
     </>
   );
 };
