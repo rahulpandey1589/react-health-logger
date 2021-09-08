@@ -1,32 +1,32 @@
 import DropdownComponent from "../../SharedComponent/dropdown-component";
 import firebase from "../../firebase";
-import { useEffect } from "react";
-
-const categoryMasterDbRef = firebase.ref("Category");
+import { useEffect, useState } from "react";
 
 const CategoryDropdownComponent = () => {
-  let items = [];
+  const categoryMasterDbRef = firebase.ref("Category");
+  const [items, setItems] = useState("");
+  const categories = [];
 
   useEffect(() => {
     fetchDropdown();
   }, []);
 
   const fetchDropdown = () => {
-    debugger;
     categoryMasterDbRef.on("value", (snapshot) => {
       const response = snapshot.val();
       for (let id in response) {
-        items.push({
+        categories.push({
           text: response[id].CategoryName,
           value: response[id].CategoryName,
         });
+        setItems('Rahul Pandey')
       }
     });
   };
 
   return (
     <DropdownComponent
-      items={items}
+      items={categories}
       className="form-select"
       defaultText="Please select"
     ></DropdownComponent>
