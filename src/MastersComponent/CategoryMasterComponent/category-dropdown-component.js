@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 
 const CategoryDropdownComponent = () => {
   const categoryMasterDbRef = firebase.ref("Category");
-  const [items,setItems] = useState([]);
-  const categories = [];
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     fetchDropdown();
@@ -13,8 +12,9 @@ const CategoryDropdownComponent = () => {
 
   const fetchDropdown = () => {
     categoryMasterDbRef.on("value", (snapshot) => {
-      debugger;
       const response = snapshot.val();
+      const categories = [];
+
       for (let id in response) {
         categories.push({
           text: response[id].CategoryName,

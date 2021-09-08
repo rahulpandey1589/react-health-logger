@@ -1,6 +1,5 @@
 const DropdownComponent = (props) => {
   const { defaultText,className,items} = props;
-  debugger;
   return (
     <select className={className} aria-label="Default select example">
       <option>{defaultText}</option>
