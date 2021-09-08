@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const CategoryDropdownComponent = () => {
   const categoryMasterDbRef = firebase.ref("Category");
-  const [items, setItems] = useState("");
+  const [items,setItems] = useState([]);
   const categories = [];
 
   useEffect(() => {
@@ -13,23 +13,28 @@ const CategoryDropdownComponent = () => {
 
   const fetchDropdown = () => {
     categoryMasterDbRef.on("value", (snapshot) => {
+      debugger;
       const response = snapshot.val();
       for (let id in response) {
         categories.push({
           text: response[id].CategoryName,
           value: response[id].CategoryName,
         });
-        setItems('Rahul Pandey')
       }
+      setItems(categories);
     });
   };
 
   return (
-    <DropdownComponent
-      items={categories}
-      className="form-select"
-      defaultText="Please select"
-    ></DropdownComponent>
+    <>
+      {items.length > 0 && (
+        <DropdownComponent
+          items={items}
+          className="form-select"
+          defaultText="Please select category"
+        ></DropdownComponent>
+      )}
+    </>
   );
 };
 

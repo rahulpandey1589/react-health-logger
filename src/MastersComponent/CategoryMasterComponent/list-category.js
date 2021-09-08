@@ -7,7 +7,7 @@ const CategoryListComponent = () => {
 
   useEffect(() => {
     loadCategory();
-  }, []);
+  });
 
   const loadCategory = () => {
     categoryMasterDbRef.on("value", (snapshot) => {
@@ -35,7 +35,7 @@ const CategoryListComponent = () => {
             categoryMaster.map((item) => <tr>
                 <td>{item.CategoryName}</td>
                 <td>{item.Description}</td>
-                <td>{item.IsActive == true ? "True" : "False"}</td>
+                <td>{item.IsActive === true ? "True" : "False"}</td>
             </tr>)}
         </tbody>
       </table>
