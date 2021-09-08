@@ -11,8 +11,11 @@ const AddTestControl = () => {
 
   const onChangeHandler = (event) => {
     event.preventDefault();
-
     const { name, value } = event.target;
+    setStateItems(name,value);
+  };
+
+  const setStateItems = (name, value) => {
     switch (name) {
       case "title":
         setTitle(value);
