@@ -12,7 +12,7 @@ const AddTestControl = () => {
   const onChangeHandler = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    setStateItems(name,value);
+    setStateItems(name, value);
   };
 
   const setStateItems = (name, value) => {
@@ -38,12 +38,16 @@ const AddTestControl = () => {
     const testMasterRef = firebase.ref("TestMaster");
     const data = {
       Title: title,
-      Category: "Blood Samples",
-      Price: 485,
+      Category: category,
+      Price: price,
       Description: description,
     };
 
     testMasterRef.push(data);
+  };
+
+  const categoryChangeHandler = (data) => {
+    setCategory(data);
   };
 
   return (
@@ -53,7 +57,9 @@ const AddTestControl = () => {
           <label for="category">Category</label>
         </div>
         <div className="col-md-4">
-          <CategoryDropdownComponent></CategoryDropdownComponent>
+          <CategoryDropdownComponent
+            onChange={categoryChangeHandler}
+          ></CategoryDropdownComponent>
         </div>
       </div>
       <div className="row">
@@ -94,6 +100,7 @@ const AddTestControl = () => {
           <input
             className="form-control"
             type="number"
+            name="price"
             value={price}
             onChange={onChangeHandler}
             placeholder="Please enter price"

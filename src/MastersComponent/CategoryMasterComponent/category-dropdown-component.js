@@ -2,7 +2,8 @@ import DropdownComponent from "../../SharedComponent/dropdown-component";
 import firebase from "../../firebase";
 import { useEffect, useState } from "react";
 
-const CategoryDropdownComponent = () => {
+const CategoryDropdownComponent = (props) => {
+  const { onChange } = props;
   const categoryMasterDbRef = firebase.ref("Category");
   const [items, setItems] = useState([]);
 
@@ -25,6 +26,10 @@ const CategoryDropdownComponent = () => {
     });
   };
 
+  const selectItemHandler = (data) => {
+    onChange(data);
+  };
+
   return (
     <>
       {items.length > 0 && (
@@ -32,6 +37,7 @@ const CategoryDropdownComponent = () => {
           items={items}
           className="form-select"
           defaultText="Please select category"
+          onChange={selectItemHandler}
         ></DropdownComponent>
       )}
     </>
