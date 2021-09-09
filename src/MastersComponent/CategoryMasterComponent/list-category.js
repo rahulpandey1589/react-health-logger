@@ -6,8 +6,9 @@ const CategoryListComponent = () => {
   const [categoryMaster, setCategoryMaster] = useState([]);
 
   useEffect(() => {
+    console.log('I am loaded inside list category');
     loadCategory();
-  });
+  },[]);
 
   const loadCategory = () => {
     categoryMasterDbRef.on("value", (snapshot) => {

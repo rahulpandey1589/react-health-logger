@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import firebase from "../../firebase";
 import ButtonComponent from "../../SharedComponent/button-component";
 
+const testMasterDbRef = firebase.ref("TestMaster");
+
 const ListExistingTestComponent = () => {
   const [masters, setMasters] = useState([]);
 
@@ -10,16 +12,20 @@ const ListExistingTestComponent = () => {
   }, []);
 
   const deleteHandler = (event) => {
-    console.log(event);
-    alert("Delete click handler called in parent component!!!");
+    let idToBeDeleted = event.id;
+    alert("Do you really want to delete this record ?");
+    if (idToBeDeleted !== undefined) {
+      testMasterDbRef.child(event.id).remove();
+    }
   };
 
-  const detailHandler = () => {
-    alert("Detail click handler called in parent component!!!");
+  const detailHandler = (event) => {
+    alert(
+      `Detail click handler called in parent component!!! ${event.target.value}`
+    );
   };
 
   const loadAllTest = () => {
-    const testMasterDbRef = firebase.ref("TestMaster");
     testMasterDbRef.on("value", (snapshot) => {
       const response = snapshot.val();
       const masterList = [];

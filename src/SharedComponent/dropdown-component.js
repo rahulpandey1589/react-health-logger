@@ -13,7 +13,7 @@ const DropdownComponent = (props) => {
     >
       <option>{defaultText}</option>
       {items !== undefined &&
-        items.map((item) => <option value={item.value}>{item.text}</option>)}
+        items.map((item) => <option key={item.value} value={item.value}>{item.text}</option>)}
     </select>
   );
 };
