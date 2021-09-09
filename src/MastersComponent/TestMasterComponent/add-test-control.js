@@ -2,6 +2,7 @@ import { useState } from "react";
 import firebase from "../../firebase";
 import ButtonComponent from "../../SharedComponent/button-component";
 import CategoryDropdownComponent from "../CategoryMasterComponent/category-dropdown-component";
+import TestMasterModel from "../../Models/test-master-model";
 
 const AddTestControl = () => {
   const [title, setTitle] = useState("");
@@ -36,13 +37,8 @@ const AddTestControl = () => {
 
   const addHandler = () => {
     const testMasterRef = firebase.ref("TestMaster");
-    const data = {
-      Title: title,
-      Category: category,
-      Price: price,
-      Description: description,
-    };
-
+    let data = new TestMasterModel(title, description, category, price);
+    console.log(data);
     testMasterRef.push(data);
   };
 
