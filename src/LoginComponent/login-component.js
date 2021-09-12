@@ -7,11 +7,13 @@ const LoginComponent = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
 
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
+    setFormValid(false);
 
     switch (name) {
       case "username":
@@ -25,6 +27,15 @@ const LoginComponent = () => {
       default:
         break;
     }
+
+    if (
+      emailError.length === 0 &&
+      passwordError.length === 0 &&
+      username.length > 0 &&
+      password.length > 0
+    ) {
+      setFormValid(true);
+    }
   };
 
   const validateUserName = (value) => {
@@ -36,7 +47,7 @@ const LoginComponent = () => {
   };
 
   const validateUserPassword = (password) => {
-    if (password.length < 5 || password.length > 15) {
+    if (password.length <= 5 || password.length > 15) {
       setPasswordError(
         "Password should be greater than 5 character and should be less than 15."
       );
@@ -47,6 +58,9 @@ const LoginComponent = () => {
 
   const handleFormSubmit = ($event) => {
     $event.preventDefault();
+    if (!isformValid) {
+      return;
+    }
     fetch(
       `${process.env.REACT_APP_LOGIN_URL}${process.env.REACT_APP_API_KEY}`,
       {
@@ -60,7 +74,12 @@ const LoginComponent = () => {
     )
       .then(async (data) => {
         let response = await data.json();
-        if (response.ok) {
+        debugger;
+        if (response.idToken !== undefined) {
+          localStorage.setItem("idToken",response.idToken);
+          localStorage.setItem("refreshToken",response.refreshToken);
+          localStorage.setItem("expiresIn",response.exprireIn);
+          localStorage.setItem("email",response.email);
           history.push("/home");
         }
       })
@@ -106,7 +125,11 @@ const LoginComponent = () => {
         </div>
         <br />
         <div className="row col-md-4 offset-2">
-          <button type="submit" className="btn btn-primary">
+          <button
+            disabled={!isformValid}
+            type="submit"
+            className="btn btn-primary"
+          >
             Login
           </button>
         </div>
