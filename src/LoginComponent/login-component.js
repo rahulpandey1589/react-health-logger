@@ -81,9 +81,11 @@ const LoginComponent = () => {
     ajaxRequest.subscribe({
       next:data =>{
          if(data.response.idToken !== undefined){
-           alert('User is valid');
            authContext.login(data.response.idToken);
            history.push('/home');
+         }
+         else{
+           alert('Invalid Credentials');
          }
       }
     });
