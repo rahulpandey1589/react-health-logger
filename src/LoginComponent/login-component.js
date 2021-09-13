@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "./login-component.css";
 import { ajax } from "rxjs/ajax";
+import AuthContext from "../Store/auth-context";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");
@@ -10,6 +11,7 @@ const LoginComponent = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
+  const authContext = useContext(AuthContext)
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -80,11 +82,11 @@ const LoginComponent = () => {
       next:data =>{
          if(data.response.idToken !== undefined){
            alert('User is valid');
+           authContext.login(data.response.idToken);
            history.push('/home');
          }
       }
     });
-
     clearState();
   };
 

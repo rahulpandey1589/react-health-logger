@@ -1,14 +1,20 @@
-import App from "../App";
 import { Link, Route, Switch } from "react-router-dom";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { useContext } from "react";
+
+import App from "../App";
 import HomeComponent from "../HomeComponent/home-component";
 import LoginComponent from "../LoginComponent/login-component";
 import RegisterComponent from "../LoginComponent/register-component";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/list-test";
 import AddNewTestComponent from "../MastersComponent/TestMasterComponent/add-test";
 import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category";
+import AuthContext from "../Store/auth-context";
 
 const NavigationComponent = () => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
+
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -38,9 +44,16 @@ const NavigationComponent = () => {
             <Nav.Link as={Link} to={"/login"}>
               Login
             </Nav.Link>
-            <Nav.Link as={Link} to={"/register"}>
-              Register
-            </Nav.Link>
+            {!isLoggedIn && (
+              <Nav.Link as={Link} to={"/register"}>
+                Register
+              </Nav.Link>
+            )}
+            {isLoggedIn && (
+              <Nav.Link as={Link} to={"/login"}>
+                Logout
+              </Nav.Link>
+            )}
           </Nav>
         </Container>
       </Navbar>
@@ -57,7 +70,7 @@ const NavigationComponent = () => {
           path="/masters/list-all-test"
           component={ListExistingTestComponent}
         ></Route>
-         <Route
+        <Route
           path="/masters/add-category"
           component={AddCategoryComponent}
         ></Route>
