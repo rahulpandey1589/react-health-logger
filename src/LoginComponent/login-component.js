@@ -1,8 +1,9 @@
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "./login-component.css";
 import { ajax } from "rxjs/ajax";
 import AuthContext from "../Store/auth-context";
+import AlertComponent from "../SharedComponent/alert";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");
@@ -11,7 +12,8 @@ const LoginComponent = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
-  const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
+  const displayAlert = false;
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -79,15 +81,14 @@ const LoginComponent = () => {
     });
 
     ajaxRequest.subscribe({
-      next:data =>{
-         if(data.response.idToken !== undefined){
-           authContext.login(data.response.idToken);
-           history.push('/home');
-         }
-         else{
-           alert('Invalid Credentials');
-         }
-      }
+      next: (data) => {
+        if (data.response.idToken !== undefined) {
+          authContext.login(data.response.idToken);
+          history.push("/home");
+        } else {
+          alert("Invalid Credentials");
+        }
+      },
     });
     clearState();
   };
@@ -138,7 +139,14 @@ const LoginComponent = () => {
           </button>
         </div>
         <div className="row">
-          <div className="col-md-4 offset-4"></div>
+          <div className="col-md-4 offset-4">
+            {displayAlert && (
+              <AlertComponent
+                className="alert alert-danger"
+                displayText="Please enter"
+              ></AlertComponent>
+            )}
+          </div>
         </div>
       </div>
     </form>
