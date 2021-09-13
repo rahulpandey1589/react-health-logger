@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./login-component.css";
+import { ajax } from "rxjs/ajax";
+import { map } from "rxjs/operators";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");
@@ -57,33 +59,32 @@ const LoginComponent = () => {
   };
 
   const handleFormSubmit = ($event) => {
+    debugger;
     $event.preventDefault();
     if (!isformValid) {
       return;
     }
-    fetch(
-      `${process.env.REACT_APP_LOGIN_URL}${process.env.REACT_APP_API_KEY}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: username,
-          password: password,
-          returnSecureToken: true,
-        }),
+    const ajaxRequest = ajax({
+      url: `${process.env.REACT_APP_LOGIN_URL}${process.env.REACT_APP_API_KEY}`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: username,
+        password: password,
+        returnSecureToken: true,
+      }),
+    });
+
+    ajaxRequest.subscribe({
+      next:data =>{
+         if(data.response.idToken !== undefined){
+           alert('User is valid');
+           history.push('/home');
+         }
       }
-    )
-      .then(async (data) => {
-        let response = await data.json();
-        debugger;
-        if (response.idToken !== undefined) {
-          localStorage.setItem("idToken",response.idToken);
-          localStorage.setItem("refreshToken",response.refreshToken);
-          localStorage.setItem("expiresIn",response.exprireIn);
-          localStorage.setItem("email",response.email);
-          history.push("/home");
-        }
-      })
-      .catch((error) => {});
+    });
 
     clearState();
   };
