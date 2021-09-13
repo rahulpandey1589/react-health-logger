@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./login-component.css";
 import { ajax } from "rxjs/ajax";
-import { map } from "rxjs/operators";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");

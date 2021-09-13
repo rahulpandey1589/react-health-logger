@@ -13,6 +13,7 @@ const AddCategoryComponent = () => {
   };
 
   const addCategory = () => {
+    
     let categoryData = {
       CategoryName: category,
       IsActive: true,

@@ -6,9 +6,8 @@ const CategoryListComponent = () => {
   const [categoryMaster, setCategoryMaster] = useState([]);
 
   useEffect(() => {
-    console.log('I am loaded inside list category');
     loadCategory();
-  },[]);
+  }, []);
 
   const loadCategory = () => {
     categoryMasterDbRef.on("value", (snapshot) => {
@@ -33,11 +32,13 @@ const CategoryListComponent = () => {
         </thead>
         <tbody>
           {categoryMaster !== undefined &&
-            categoryMaster.map((item) => <tr>
+            categoryMaster.map((item) => (
+              <tr key={item.CategoryName}>
                 <td>{item.CategoryName}</td>
                 <td>{item.Description}</td>
                 <td>{item.IsActive === true ? "True" : "False"}</td>
-            </tr>)}
+              </tr>
+            ))}
         </tbody>
       </table>
     </>
