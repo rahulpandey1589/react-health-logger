@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import firebase from "../../firebase";
+import ButtonComponent from "../../SharedComponent/button-component";
 
 const CategoryListComponent = () => {
   const categoryMasterDbRef = firebase.ref("Category");
@@ -28,6 +29,7 @@ const CategoryListComponent = () => {
             <th>Category Name</th>
             <th>Description</th>
             <th>IsActive</th>
+            <th colSpan="3">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +39,18 @@ const CategoryListComponent = () => {
                 <td>{item.CategoryName}</td>
                 <td>{item.Description}</td>
                 <td>{item.IsActive === true ? "True" : "False"}</td>
+                <td>
+                  <ButtonComponent
+                    className="btn btn-success"
+                    label="Details"
+                  ></ButtonComponent>
+                </td>
+                <td>
+                  <ButtonComponent 
+                    className="btn btn-danger"
+                    label="Delete"> 
+                  </ButtonComponent>
+                </td>
               </tr>
             ))}
         </tbody>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import ButtonComponent from "../../SharedComponent/button-component";
 import firebase from "../../firebase";
 import CategoryListComponent from "./list-category";
+import { Accordion } from "react-bootstrap";
 
 const AddCategoryComponent = () => {
   const [category, setCategory] = useState("");
@@ -13,7 +14,6 @@ const AddCategoryComponent = () => {
   };
 
   const addCategory = () => {
-    
     let categoryData = {
       CategoryName: category,
       IsActive: true,
@@ -47,8 +47,16 @@ const AddCategoryComponent = () => {
             ></ButtonComponent>
           </div>
         </div>
+        <div className="row"></div>
         <div className="row">
-          <CategoryListComponent></CategoryListComponent>
+          <Accordion defaultActiveKey="0">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>List Categories</Accordion.Header>
+              <Accordion.Body>
+                <CategoryListComponent></CategoryListComponent>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
       </div>
     </>
