@@ -10,6 +10,7 @@ import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/l
 import AddNewTestComponent from "../MastersComponent/TestMasterComponent/add-test";
 import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category";
 import AuthContext from "../Store/auth-context";
+import DashboardComponent from "../DashboardComponent/dashboard-component";
 
 const NavigationComponent = () => {
   const authCtx = useContext(AuthContext);
@@ -70,6 +71,7 @@ const NavigationComponent = () => {
         <Route path="/login" component={LoginComponent}></Route>
         <Route path="/register" component={RegisterComponent}></Route>
         <Route path="/home" component={HomeComponent}></Route>
+        <Route path="/dashboard" component={DashboardComponent}></Route>
         {isLoggedIn && (
           <Route
             path="/masters/create-new-test"

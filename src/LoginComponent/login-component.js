@@ -84,7 +84,7 @@ const LoginComponent = () => {
       next: (data) => {
         if (data.response.idToken !== undefined) {
           authContext.login(data.response.idToken);
-          history.push("/home");
+          history.push("/dashboard");
         } else {
           alert("Invalid Credentials");
         }
