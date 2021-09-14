@@ -83,7 +83,8 @@ const LoginComponent = () => {
     ajaxRequest.subscribe({
       next: (data) => {
         if (data.response.idToken !== undefined) {
-          authContext.login(data.response.idToken);
+          const expirationTime = new Date(new Date().getTime() + (+data.response.expiresIn*1000));
+          authContext.login(data.response.idToken,expirationTime.toISOString());
           history.push("/dashboard");
         } else {
           alert("Invalid Credentials");

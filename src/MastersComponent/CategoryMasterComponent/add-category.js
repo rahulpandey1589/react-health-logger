@@ -49,7 +49,7 @@ const AddCategoryComponent = () => {
         </div>
         <div className="row"></div>
         <div className="row">
-          <Accordion defaultActiveKey="0">
+          <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="0">
               <Accordion.Header>List Categories</Accordion.Header>
               <Accordion.Body>
