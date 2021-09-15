@@ -24,7 +24,7 @@ const NavigationComponent = () => {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to={"/"}>
+          <Navbar.Brand as={Link} to={"/dashboard"}>
             Health Logger
           </Navbar.Brand>
           {isLoggedIn && (
