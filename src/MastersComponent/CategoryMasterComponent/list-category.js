@@ -38,7 +38,14 @@ const CategoryListComponent = () => {
               <tr key={item.CategoryName}>
                 <td>{item.CategoryName}</td>
                 <td>{item.Description}</td>
-                <td>{item.IsActive === true ? "True" : "False"}</td>
+                <td>
+                  <input
+                    className="form-check-input"
+                    disabled="true"
+                    checked={item.IsActive}
+                    type="checkbox"
+                  ></input>
+                </td>
                 <td>
                   <ButtonComponent
                     className="btn btn-success"
@@ -46,10 +53,10 @@ const CategoryListComponent = () => {
                   ></ButtonComponent>
                 </td>
                 <td>
-                  <ButtonComponent 
+                  <ButtonComponent
                     className="btn btn-danger"
-                    label="Delete"> 
-                  </ButtonComponent>
+                    label="Delete"
+                  ></ButtonComponent>
                 </td>
               </tr>
             ))}
