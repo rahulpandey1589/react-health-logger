@@ -1,7 +1,8 @@
 import firebase from "../../firebase";
-
 import { useState, useEffect } from "react";
+
 import ButtonComponent from "../../SharedComponent/button-component";
+import InputComponent from "../../SharedComponent/input-component";
 
 const categoryDbRef = firebase.ref("Category");
 
@@ -15,11 +16,8 @@ const CategoryComponent = (props) => {
     }
   }, [categoryId]);
 
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-
-  const categoryChangeHandler = ($event) => {
-    setCategory($event.target.value);
+  const categoryName = ($value) => {
+    cName = $value;
   };
 
   const descriptionChangeHandler = ($event) => {
@@ -32,16 +30,17 @@ const CategoryComponent = (props) => {
       return;
     }
 
-    categoryDbRef.child(categoryId).once("value",function(data){
-       const {CategoryName,Description,IsActive} = data.val();
-       setCategory(CategoryName);
-       setDescription(Description);
+    categoryDbRef.child(categoryId).once("value", function (data) {
+      const { CategoryName, Description, IsActive } = data.val();
+      setCategory(CategoryName);
+      setDescription(Description);
     });
   };
 
   const addCategory = () => {
+    debugger;
     let categoryData = {
-      CategoryName: category,
+      CategoryName: cName,
       Description: description,
       IsActive: true,
     };
@@ -49,9 +48,7 @@ const CategoryComponent = (props) => {
     clear();
   };
 
-  const updateCategory =() =>{
-
-  }
+  const updateCategory = () => {};
 
   const clear = () => {
     setCategory("");
@@ -73,13 +70,18 @@ const CategoryComponent = (props) => {
           <label for="category">Category Name</label>
         </div>
         <div className="col-md-5">
-          <input
+          <InputComponent
+            className="form-control"
+            placeholder="Please enter category name"
+            getInputValue={inputValueHandler}
+          ></InputComponent>
+          {/* <input
             className="form-control"
             type="text"
             value={category}
             onChange={categoryChangeHandler}
             placeholder="Please enter category name"
-          ></input>
+          ></input> */}
         </div>
       </div>
       <div className="row">
@@ -87,13 +89,18 @@ const CategoryComponent = (props) => {
           <label for="category">Category Description</label>
         </div>
         <div className="col-md-5">
-          <input
+          <InputComponent
+            className="form-control"
+            placeholder="Please enter category description"
+            getInputValue={inputValueHandler}
+          ></InputComponent>
+          {/* <input
             className="form-control"
             type="text"
             value={description}
             onChange={descriptionChangeHandler}
             placeholder="Please enter category description"
-          ></input>
+          ></input> */}
         </div>
       </div>
       <div className="row">
