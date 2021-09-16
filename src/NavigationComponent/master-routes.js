@@ -2,6 +2,7 @@ import { Route } from "react-router-dom";
 import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/list-test";
 import AddNewTestComponent from "../MastersComponent/TestMasterComponent/add-test";
 import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category";
+import EditCategoryComponent from "../MastersComponent/CategoryMasterComponent/edit-cayegory-component";
 
 const MasterRoutes = (props) => {
   const { isLoggedIn } = props;
@@ -26,6 +27,10 @@ const MasterRoutes = (props) => {
           component={AddCategoryComponent}
         ></Route>
       )}
+      <Route
+        path="/masters/edit-category/:categoryId"
+        component={EditCategoryComponent}
+      ></Route>
     </>
   );
 };

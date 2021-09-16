@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import firebase from "../../firebase";
 import ButtonComponent from "../../SharedComponent/button-component";
+import {useHistory} from 'react-router-dom';
 
 const CategoryListComponent = () => {
   const categoryMasterDbRef = firebase.ref("Category");
   const [categoryMaster, setCategoryMaster] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     loadCategory();
@@ -21,6 +23,14 @@ const CategoryListComponent = () => {
     });
   };
 
+  const editClickHandler=($event)=>{
+    const {id} = $event;
+    history.push(`/masters/edit-category/${id}`)
+  }
+  
+  const deleteClickHandler=($event)=>{
+    console.log($event);
+  }
   return (
     <>
       <table className="table">
@@ -35,27 +45,31 @@ const CategoryListComponent = () => {
         <tbody>
           {categoryMaster !== undefined &&
             categoryMaster.map((item) => (
-              <tr key={item.CategoryName}>
+              <tr key={item.id}>
                 <td>{item.CategoryName}</td>
                 <td>{item.Description}</td>
                 <td>
                   <input
                     className="form-check-input"
                     disabled="true"
-                    checked={item.IsActive}
+                    checked={JSON.parse(item.IsActive)}
                     type="checkbox"
                   ></input>
                 </td>
                 <td>
                   <ButtonComponent
                     className="btn btn-success"
-                    label="Details"
+                    label="Edit"
+                    id={item.id}
+                    onButtonClick={editClickHandler}
                   ></ButtonComponent>
                 </td>
                 <td>
                   <ButtonComponent
                     className="btn btn-danger"
                     label="Delete"
+                    id={item.id}
+                    onButtonClick={deleteClickHandler}
                   ></ButtonComponent>
                 </td>
               </tr>
