@@ -7,7 +7,7 @@ const EditCategoryComponent = () => {
   return (
     <>
       <div className="container">
-        <CategoryComponent></CategoryComponent>
+        <CategoryComponent categoryId={categoryId} actionName="Update Category"></CategoryComponent>
       </div>
     </>
   );
