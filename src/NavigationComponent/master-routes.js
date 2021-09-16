@@ -1,8 +1,8 @@
 import { Route } from "react-router-dom";
 import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/list-test";
 import AddNewTestComponent from "../MastersComponent/TestMasterComponent/add-test";
-import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category";
-import EditCategoryComponent from "../MastersComponent/CategoryMasterComponent/edit-cayegory-component";
+import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category-component";
+import EditCategoryComponent from "../MastersComponent/CategoryMasterComponent/edit-category-component";
 
 const MasterRoutes = (props) => {
   const { isLoggedIn } = props;

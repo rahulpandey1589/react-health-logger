@@ -51,7 +51,7 @@ const CategoryListComponent = () => {
                 <td>
                   <input
                     className="form-check-input"
-                    disabled="true"
+                    disabled={JSON.parse(true)}
                     checked={JSON.parse(item.IsActive)}
                     type="checkbox"
                   ></input>
