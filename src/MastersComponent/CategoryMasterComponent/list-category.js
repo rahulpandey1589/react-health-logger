@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import firebase from "../../firebase";
 import ButtonComponent from "../../SharedComponent/button-component";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const CategoryListComponent = () => {
   const categoryMasterDbRef = firebase.ref("Category");
@@ -23,14 +23,14 @@ const CategoryListComponent = () => {
     });
   };
 
-  const editClickHandler=($event)=>{
-    const {id} = $event;
-    history.push(`/masters/edit-category/${id}`)
-  }
-  
-  const deleteClickHandler=($event)=>{
-    console.log($event);
-  }
+  const editClickHandler = ($event) => {
+    const { id } = $event;
+    history.push(`/masters/edit-category/${id}`);
+  };
+
+  const deleteClickHandler = ($event) => {
+    categoryMasterDbRef.child($event.id).remove();
+  };
   return (
     <>
       <table className="table">

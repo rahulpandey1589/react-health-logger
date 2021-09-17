@@ -4,7 +4,7 @@ import ButtonComponent from "../../SharedComponent/button-component";
 import CategoryDropdownComponent from "../CategoryMasterComponent/category-dropdown-component";
 import TestMasterModel from "../../Models/test-master-model";
 
-const AddTestControl = () => {
+const AddNewTestComponent = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -50,7 +50,7 @@ const AddTestControl = () => {
     <>
       <div className="row">
         <div className="col-md-2">
-          <label for="category">Category</label>
+          <label htmlFor="category">Category</label>
         </div>
         <div className="col-md-4">
           <CategoryDropdownComponent
@@ -60,7 +60,7 @@ const AddTestControl = () => {
       </div>
       <div className="row">
         <div className="col-md-2">
-          <label for="title">Title</label>
+          <label htmlFor="title">Title</label>
         </div>
         <div className="col-md-4">
           <input
@@ -103,6 +103,7 @@ const AddTestControl = () => {
           ></input>
         </div>
       </div>
+      <br/>
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-4">
@@ -112,15 +113,9 @@ const AddTestControl = () => {
             onButtonClick={addHandler}
           ></ButtonComponent>
         </div>
-        <div className="col-md-4">
-          <ButtonComponent
-            label="View All"
-            className="btn btn-primary"
-          ></ButtonComponent>
-        </div>
       </div>
     </>
   );
 };
 
-export default AddTestControl;
+export default AddNewTestComponent;

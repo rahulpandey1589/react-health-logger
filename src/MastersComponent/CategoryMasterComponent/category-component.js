@@ -1,6 +1,6 @@
 import firebase from "../../firebase";
 import { useEffect } from "react";
-
+import { useHistory } from "react-router-dom";
 import ButtonComponent from "../../SharedComponent/button-component";
 import InputComponent from "../../SharedComponent/input-component";
 
@@ -8,7 +8,8 @@ const categoryDbRef = firebase.ref("Category");
 
 const CategoryComponent = (props) => {
   const { actionName, categoryId } = props;
-  
+  const history = useHistory();
+
   let cName, cDescription;
 
   useEffect(() => {
@@ -31,7 +32,6 @@ const CategoryComponent = (props) => {
       default:
         break;
     }
-
   };
 
   const fetchCategoryById = () => {
@@ -41,9 +41,9 @@ const CategoryComponent = (props) => {
     }
 
     categoryDbRef.child(categoryId).once("value", function (data) {
-       const { CategoryName, Description, IsActive } = data.val();
-       document.getElementById('txtCategory').value = CategoryName;
-       document.getElementById('txtCategoryDesc').value = Description;
+      const { CategoryName, Description, IsActive } = data.val();
+      document.getElementById("txtCategory").value = CategoryName;
+      document.getElementById("txtCategoryDesc").value = Description;
     });
   };
 
@@ -59,13 +59,12 @@ const CategoryComponent = (props) => {
   };
 
   const updateCategory = () => {
-    debugger;
-    firebase.ref("Category").update({
-      CategoryName: cName,
-      Description: cDescription,
-      IsActive: true
-    });
-    clear();
+    // firebase.ref("Category").update({
+    //   CategoryName: cName,
+    //   Description: cDescription,
+    //   IsActive: true,
+    // });
+    history.goBack();
   };
 
   const clear = () => {
@@ -84,37 +83,38 @@ const CategoryComponent = (props) => {
   return (
     <>
       <div className="row">
-        <div className="col-md-3">
-          <label for="category">Category Name</label>
-        </div>
-        <div className="col-md-5">
-          <InputComponent
-            className="form-control"
-            id="txtCategory"
-            name="name"
-            placeholder="Please enter category name"
-            getInputValue={handlerChange}
-            renderedValue={cName}
-          ></InputComponent>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-3">
-          <label for="category">Category Description</label>
-        </div>
-        <div className="col-md-5">
-          <InputComponent
-            id="txtCategoryDesc"
-            className="form-control"
-            name="description"
-            placeholder="Please enter category description"
-            getInputValue={handlerChange}
-            renderedValue={cDescription}
-          ></InputComponent>
+        <div className="col-md-8 offset-2">
+          <div className="col-md-4">
+            <label htmlFor="category">Category Name</label>
+          </div>
+          <div className="col-md-4">
+            <InputComponent
+              className="form-control"
+              id="txtCategory"
+              name="name"
+              getInputValue={handlerChange}
+            ></InputComponent>
+          </div>
         </div>
       </div>
       <div className="row">
-        <div className="col-md-4 offset-6">
+        <div className="col-md-8 offset-2">
+          <div className="col-md-4">
+            <label htmlFor="category">Category Description</label>
+          </div>
+          <div className="col-md-4">
+            <InputComponent
+              id="txtCategoryDesc"
+              className="form-control"
+              name="description"
+              getInputValue={handlerChange}
+            ></InputComponent>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div className="row">
+        <div className="col-md-8 offset-2">
           <ButtonComponent
             label={actionName}
             className="btn btn-success"

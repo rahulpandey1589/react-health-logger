@@ -1,8 +1,10 @@
 import { Route } from "react-router-dom";
-import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/list-test";
-import AddNewTestComponent from "../MastersComponent/TestMasterComponent/add-test";
+
+import ListExistingTestComponent from "../MastersComponent/TestMasterComponent/list-test-component";
 import AddCategoryComponent from "../MastersComponent/CategoryMasterComponent/add-category-component";
 import EditCategoryComponent from "../MastersComponent/CategoryMasterComponent/edit-category-component";
+import TestComponent from "../MastersComponent/TestMasterComponent/test-component";
+
 
 const MasterRoutes = (props) => {
   const { isLoggedIn } = props;
@@ -12,13 +14,7 @@ const MasterRoutes = (props) => {
       {isLoggedIn && (
         <Route
           path="/masters/create-new-test"
-          component={AddNewTestComponent}
-        ></Route>
-      )}
-      {isLoggedIn && (
-        <Route
-          path="/masters/list-all-test"
-          component={ListExistingTestComponent}
+          component={TestComponent}
         ></Route>
       )}
       {isLoggedIn && (
