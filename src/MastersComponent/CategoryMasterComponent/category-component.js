@@ -1,5 +1,5 @@
 import firebase from "../../firebase";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import ButtonComponent from "../../SharedComponent/button-component";
 import InputComponent from "../../SharedComponent/input-component";
@@ -8,6 +8,8 @@ const categoryDbRef = firebase.ref("Category");
 
 const CategoryComponent = (props) => {
   const { actionName, categoryId } = props;
+  
+  let cName, cDescription;
 
   useEffect(() => {
     if (categoryId !== undefined) {
@@ -16,12 +18,20 @@ const CategoryComponent = (props) => {
     }
   }, [categoryId]);
 
-  const categoryName = ($value) => {
-    cName = $value;
-  };
+  const handlerChange = ($value) => {
+    debugger;
+    const { key, value } = $value;
+    switch (key) {
+      case "name":
+        cName = value;
+        break;
+      case "description":
+        cDescription = value;
+        break;
+      default:
+        break;
+    }
 
-  const descriptionChangeHandler = ($event) => {
-    setDescription($event.target.value);
   };
 
   const fetchCategoryById = () => {
@@ -31,9 +41,9 @@ const CategoryComponent = (props) => {
     }
 
     categoryDbRef.child(categoryId).once("value", function (data) {
-      const { CategoryName, Description, IsActive } = data.val();
-      setCategory(CategoryName);
-      setDescription(Description);
+       const { CategoryName, Description, IsActive } = data.val();
+       document.getElementById('txtCategory').value = CategoryName;
+       document.getElementById('txtCategoryDesc').value = Description;
     });
   };
 
@@ -41,18 +51,26 @@ const CategoryComponent = (props) => {
     debugger;
     let categoryData = {
       CategoryName: cName,
-      Description: description,
+      Description: cDescription,
       IsActive: true,
     };
     categoryDbRef.push(categoryData);
     clear();
   };
 
-  const updateCategory = () => {};
+  const updateCategory = () => {
+    debugger;
+    firebase.ref("Category").update({
+      CategoryName: cName,
+      Description: cDescription,
+      IsActive: true
+    });
+    clear();
+  };
 
   const clear = () => {
-    setCategory("");
-    setDescription("");
+    // setCategory("");
+    // setDescription("");
   };
 
   const onClickHandler = () => {
@@ -72,16 +90,12 @@ const CategoryComponent = (props) => {
         <div className="col-md-5">
           <InputComponent
             className="form-control"
+            id="txtCategory"
+            name="name"
             placeholder="Please enter category name"
-            getInputValue={inputValueHandler}
+            getInputValue={handlerChange}
+            renderedValue={cName}
           ></InputComponent>
-          {/* <input
-            className="form-control"
-            type="text"
-            value={category}
-            onChange={categoryChangeHandler}
-            placeholder="Please enter category name"
-          ></input> */}
         </div>
       </div>
       <div className="row">
@@ -90,17 +104,13 @@ const CategoryComponent = (props) => {
         </div>
         <div className="col-md-5">
           <InputComponent
+            id="txtCategoryDesc"
             className="form-control"
+            name="description"
             placeholder="Please enter category description"
-            getInputValue={inputValueHandler}
+            getInputValue={handlerChange}
+            renderedValue={cDescription}
           ></InputComponent>
-          {/* <input
-            className="form-control"
-            type="text"
-            value={description}
-            onChange={descriptionChangeHandler}
-            placeholder="Please enter category description"
-          ></input> */}
         </div>
       </div>
       <div className="row">

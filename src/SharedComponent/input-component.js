@@ -1,22 +1,27 @@
 import { useState } from "react";
 
 const InputComponent = (props) => {
-
-  const [value,setValue] = useState("");
-
-  const { className,placeholder,getInputValue } = props;
+  const [value, setValue] = useState("");
+  const { className, placeholder, getInputValue, name,renderedValue,id } = props;
 
   const onChangeHandler = ($event) => {
-      setValue($event.target.value)
-      getInputValue(value);
+      debugger;
+
+    setValue($event.target.value);
+    const changeObj = {
+      key: name,
+      value: $event.target.value,
+    };
+    getInputValue(changeObj);
   };
 
   return (
     <>
       <input
+        id={id}
         className={className}
         type="text"
-        value={value}
+        value={renderedValue === undefined ? value : renderedValue}
         onChange={onChangeHandler}
         placeholder={placeholder}
       ></input>
