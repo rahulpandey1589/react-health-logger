@@ -48,24 +48,16 @@ const AddTestComponent = () => {
 
   return (
     <>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-4">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-4">
             <label htmlFor="category">Category</label>
-          </div>
-          <div className="col-md-4">
             <CategoryDropdownComponent
               onChange={categoryChangeHandler}
             ></CategoryDropdownComponent>
           </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-4">
+          <div className="col-4">
             <label htmlFor="title">Title</label>
-          </div>
-          <div className="col-md-4">
             <input
               className="form-control"
               name="title"
@@ -76,13 +68,9 @@ const AddTestComponent = () => {
             ></input>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-2">
+        <div className="row">
+          <div className="col-4">
             <label htmlFor="description">Description</label>
-          </div>
-          <div className="col-md-4">
             <input
               className="form-control"
               type="text"
@@ -92,14 +80,8 @@ const AddTestComponent = () => {
               placeholder="Please enter description"
             ></input>
           </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-2">
+          <div className="col-4">
             <label htmlFor="title">Price</label>
-          </div>
-          <div className="col-md-4">
             <input
               className="form-control"
               type="number"
@@ -110,11 +92,9 @@ const AddTestComponent = () => {
             ></input>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-4">
-            <br/>
+        <br/>
+        <div className="row">
+          <div className="col">
             <ButtonComponent
               label="Add New"
               className="btn btn-success"

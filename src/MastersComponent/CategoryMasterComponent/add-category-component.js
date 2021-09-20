@@ -6,7 +6,6 @@ import CategoryComponent from "./category-component";
 const AddCategoryComponent = () => {
   return (
     <>
-      <div className="container-center">
         <CategoryComponent actionName="Add Category"></CategoryComponent>
         <div className="row">
           <div className="col-md-8 offset-2">
@@ -21,7 +20,6 @@ const AddCategoryComponent = () => {
             </Accordion>
           </div>
         </div>
-      </div>
     </>
   );
 };

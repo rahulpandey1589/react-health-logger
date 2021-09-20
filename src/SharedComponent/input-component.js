@@ -5,8 +5,6 @@ const InputComponent = (props) => {
   const { className, placeholder, getInputValue, name,id } = props;
 
   const onChangeHandler = ($event) => {
-      debugger;
-
     setValue($event.target.value);
     const changeObj = {
       key: name,

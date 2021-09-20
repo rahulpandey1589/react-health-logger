@@ -82,45 +82,37 @@ const CategoryComponent = (props) => {
 
   return (
     <>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-4">
-            <label htmlFor="category">Category Name</label>
+      <div className="container-fluid">
+          <div className="row">
+            <div className="col-4">
+              <label htmlFor="category">Category Name</label>
+              <InputComponent
+                className="form-control"
+                id="txtCategory"
+                name="name"
+                getInputValue={handlerChange}
+              ></InputComponent>
+            </div>
+            <div className="col-4">
+              <label htmlFor="category">Category Description</label>
+              <InputComponent
+                id="txtCategoryDesc"
+                className="form-control"
+                name="description"
+                getInputValue={handlerChange}
+              ></InputComponent>
+            </div>
           </div>
-          <div className="col-md-4">
-            <InputComponent
-              className="form-control"
-              id="txtCategory"
-              name="name"
-              getInputValue={handlerChange}
-            ></InputComponent>
+          <br />
+          <div className="row">
+            <div className="col-4">
+              <ButtonComponent
+                label={actionName}
+                className="btn btn-success"
+                onButtonClick={onClickHandler}
+              ></ButtonComponent>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <div className="col-md-4">
-            <label htmlFor="category">Category Description</label>
-          </div>
-          <div className="col-md-4">
-            <InputComponent
-              id="txtCategoryDesc"
-              className="form-control"
-              name="description"
-              getInputValue={handlerChange}
-            ></InputComponent>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div className="row">
-        <div className="col-md-8 offset-2">
-          <ButtonComponent
-            label={actionName}
-            className="btn btn-success"
-            onButtonClick={onClickHandler}
-          ></ButtonComponent>
-        </div>
       </div>
     </>
   );
