@@ -48,7 +48,7 @@ const AddTestComponent = () => {
 
   return (
     <>
-      <div className="container-fluid">
+
         <div className="row">
           <div className="col-4">
             <label htmlFor="category">Category</label>
@@ -102,7 +102,6 @@ const AddTestComponent = () => {
             ></ButtonComponent>
           </div>
         </div>
-      </div>
     </>
   );
 };

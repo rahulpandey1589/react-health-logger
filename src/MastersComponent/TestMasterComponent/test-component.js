@@ -5,11 +5,11 @@ import { Accordion } from "react-bootstrap";
 const TestComponent = () => {
   return (
     <>
-      <div className="container-center">
+      <div className="container-fluid">
         <AddNewTestComponent />
+        <br/>
         <div className="row">
-          <div className="col-md-8 offset-2">
-          <hr />
+          <div className="col-8">
             <Accordion defaultActiveKey="1">
               <Accordion.Item eventKey="1">
                 <Accordion.Header>List Test</Accordion.Header>

@@ -6,9 +6,10 @@ import CategoryComponent from "./category-component";
 const AddCategoryComponent = () => {
   return (
     <>
+      <div className="container-fluid">
         <CategoryComponent actionName="Add Category"></CategoryComponent>
         <div className="row">
-          <div className="col-md-8 offset-2">
+          <div className="col-8">
             <hr />
             <Accordion defaultActiveKey="1">
               <Accordion.Item eventKey="1">
@@ -20,6 +21,7 @@ const AddCategoryComponent = () => {
             </Accordion>
           </div>
         </div>
+      </div>
     </>
   );
 };

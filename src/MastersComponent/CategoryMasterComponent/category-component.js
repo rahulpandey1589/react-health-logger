@@ -82,7 +82,6 @@ const CategoryComponent = (props) => {
 
   return (
     <>
-      <div className="container-fluid">
           <div className="row">
             <div className="col-4">
               <label htmlFor="category">Category Name</label>
@@ -113,7 +112,6 @@ const CategoryComponent = (props) => {
               ></ButtonComponent>
             </div>
           </div>
-      </div>
     </>
   );
 };
