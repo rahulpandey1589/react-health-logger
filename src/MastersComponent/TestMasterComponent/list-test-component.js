@@ -38,15 +38,7 @@ const ListExistingTestComponent = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="col-md-4 offset-8">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search..."
-          ></input>
-        </div>
-        <br />
+     
         {
           <table className="table">
             <thead>
@@ -85,7 +77,6 @@ const ListExistingTestComponent = () => {
             </tbody>
           </table>
         }
-      </div>
     </>
   );
 };
