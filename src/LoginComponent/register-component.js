@@ -1,13 +1,29 @@
 const RegisterComponent = () => {
   return (
-    <div className="container-fluid">
+    <div className="container center">
       <form>
         <div className="row col-md-4 offset-2">
-          <label htmlFor="username">UserName</label>
+          <label htmlFor="username">First Name</label>
           <input
-            name="username"
+            name="firstName"
             type="text"
-            placeholder="Please Enter UserName"
+            placeholder="Please Enter FirstName"
+            className="form-control"
+          />
+          <br />
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            name="lastName"
+            type="text"
+            placeholder="Please Enter LastName"
+            className="form-control"
+          />
+          <br />
+          <label htmlFor="email">Email Address</label>
+          <input
+            name="email"
+            type="text"
+            placeholder="Please Enter Email Address"
             className="form-control"
           />
           <br />
