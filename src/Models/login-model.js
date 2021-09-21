@@ -13,6 +13,10 @@ class LoginModel{
 }
 
 
-class LoginErrorModel{
-    constructor()
+export class LoginErrorModel{
+    constructor(domain,message,reason){
+        this.domain = domain;
+        this.message= message;
+        this.reason = reason;
+    }
 }

@@ -5,6 +5,7 @@ import { ajax } from "rxjs/ajax";
 import AuthContext from "../Store/auth-context";
 import AlertComponent from "../SharedComponent/alert";
 import "./login-component.css";
+import { LoginErrorModel } from "../Models/login-model";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");
@@ -84,13 +85,29 @@ const LoginComponent = () => {
     ajaxRequest.subscribe({
       next: (data) => {
         if (data.response.idToken !== undefined) {
-          const expirationTime = new Date(new Date().getTime() + (+data.response.expiresIn*1000));
-          authContext.login(data.response.idToken,expirationTime.toISOString());
+          const expirationTime = new Date(
+            new Date().getTime() + +data.response.expiresIn * 1000
+          );
+          authContext.login(
+            data.response.idToken,
+            expirationTime.toISOString()
+          );
           history.push("/dashboard");
         } else {
           alert("Invalid Credentials");
         }
       },
+      error: (error) => {
+        debugger;
+        if (error.response.error.errors.length > 1) {
+          error.response.error.errors.forEach((x) => {
+            debugger;
+            let errorModel = new LoginErrorModel(x.domain,x.message,x.reason);
+            console.log(errorModel);
+          });
+        }
+      },
+      complete: () => {},
     });
     clearState();
   };
