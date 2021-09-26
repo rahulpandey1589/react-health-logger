@@ -93,7 +93,7 @@ const CategoryComponent = (props) => {
               ></InputComponent>
             </div>
             <div className="col-4">
-              <label htmlFor="category">Category Description</label>
+              <label htmlFor="category">Description</label>
               <InputComponent
                 id="txtCategoryDesc"
                 className="form-control"

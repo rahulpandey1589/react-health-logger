@@ -102,7 +102,7 @@ const LoginComponent = () => {
         if (error.response.error.errors.length > 1) {
           error.response.error.errors.forEach((x) => {
             debugger;
-            let errorModel = new LoginErrorModel(x.domain,x.message,x.reason);
+            let errorModel = new LoginErrorModel(x.domain, x.message, x.reason);
             console.log(errorModel);
           });
         }
@@ -148,17 +148,22 @@ const LoginComponent = () => {
           )}
         </div>
         <br />
-        <div className="row col-md-4 offset-2">
-          <button
-            disabled={!isformValid}
-            type="submit"
-            className="btn btn-primary"
-          >
-            Login
-          </button>
+        <div className="row">
+          <div className="col offset-2">
+            <button
+              disabled={!isformValid}
+              type="submit"
+              className="btn btn-primary"
+            >
+              Login
+            </button>
+          </div>
+          <div  className="col-md-4">
+            <a href="www.google.com">Forgot Password</a>
+          </div>
         </div>
         <div className="row">
-          <div className="col-md-4 offset-4">
+          <div className="col-md-2 offset-4">
             {displayAlert && (
               <AlertComponent
                 className="alert alert-danger"
