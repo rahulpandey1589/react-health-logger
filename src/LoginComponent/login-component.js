@@ -6,6 +6,7 @@ import AuthContext from "../Store/auth-context";
 import AlertComponent from "../SharedComponent/alert";
 import "./login-component.css";
 import { LoginErrorModel } from "../Models/login-model";
+import axios from "../Services/axios";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");
@@ -68,46 +69,23 @@ const LoginComponent = () => {
     if (!isformValid) {
       return;
     }
-    const ajaxRequest$ = ajax({
-      url: `${process.env.REACT_APP_BASE_API_URL}/auth/authenticate`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      }),
+
+    const data = { username: username, password: password };
+
+    axios.post("/auth/authenticate", data).then((response) => {
+      debugger;
+      const { success, token, expiresIn } = response.data;
+      if (success) {
+        const expirationTime = new Date(
+          new Date().getTime() + +expiresIn * 1000
+        );
+        authContext.login(token, expirationTime.toISOString());
+        history.push("/dashboard");
+      } else {
+        alert("Invalid Credentials");
+      }
     });
 
-    ajaxRequest$.subscribe({
-      next: (data) => {
-      const {success,token,expiresIn}=  data.response;
-        if (success) {
-          const expirationTime = new Date(
-            new Date().getTime() + +expiresIn * 1000
-          );
-          authContext.login(
-            token,
-            expirationTime.toISOString()
-          );
-          history.push("/dashboard");
-        } else {
-          alert("Invalid Credentials");
-        }
-      },
-      error: (error) => {
-        debugger;
-        if (error.response.error.errors.length > 1) {
-          error.response.error.errors.forEach((x) => {
-            debugger;
-            let errorModel = new LoginErrorModel(x.domain, x.message, x.reason);
-            console.log(errorModel);
-          });
-        }
-      },
-      complete: () => {},
-    });
     clearState();
   };
 
@@ -157,7 +135,7 @@ const LoginComponent = () => {
               Login
             </button>
           </div>
-          <div  className="col-md-4">
+          <div className="col-md-4">
             <a href="www.google.com">Forgot Password</a>
           </div>
         </div>
