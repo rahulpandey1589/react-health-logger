@@ -64,32 +64,31 @@ const LoginComponent = () => {
   };
 
   const handleFormSubmit = ($event) => {
-    debugger;
     $event.preventDefault();
     if (!isformValid) {
       return;
     }
-    const ajaxRequest = ajax({
-      url: `${process.env.REACT_APP_LOGIN_URL}${process.env.REACT_APP_API_KEY}`,
+    const ajaxRequest$ = ajax({
+      url: `${process.env.REACT_APP_BASE_API_URL}/auth/authenticate`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: username,
-        password: password,
-        returnSecureToken: true,
+        username: username,
+        password: password
       }),
     });
 
-    ajaxRequest.subscribe({
+    ajaxRequest$.subscribe({
       next: (data) => {
-        if (data.response.idToken !== undefined) {
+      const {success,token,expiresIn}=  data.response;
+        if (success) {
           const expirationTime = new Date(
-            new Date().getTime() + +data.response.expiresIn * 1000
+            new Date().getTime() + +expiresIn * 1000
           );
           authContext.login(
-            data.response.idToken,
+            token,
             expirationTime.toISOString()
           );
           history.push("/dashboard");

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import firebase from "../../firebase";
+import { ajax } from "rxjs/ajax";
 import ButtonComponent from "../../SharedComponent/button-component";
 import { useHistory } from "react-router-dom";
 
 const CategoryListComponent = () => {
-  const categoryMasterDbRef = firebase.ref("Category");
   const [categoryMaster, setCategoryMaster] = useState([]);
   const history = useHistory();
 
@@ -13,24 +12,41 @@ const CategoryListComponent = () => {
   }, []);
 
   const loadCategory = () => {
-    categoryMasterDbRef.on("value", (snapshot) => {
-      const response = snapshot.val();
-      const masterList = [];
-      for (let id in response) {
-        masterList.push({ id, ...response[id] });
-      }
-      setCategoryMaster(masterList);
+    debugger;
+    const ajaxRequest$ = ajax({
+      url: `${process.env.REACT_APP_BASE_API_URL}/masters/category`,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("idToken")}`,
+      },
+    });
+
+    ajaxRequest$.subscribe({
+      next: (apiResponse) => {
+        const { success, message, data: Categories } = apiResponse.response;
+        if (success) {
+          const masterList = [];
+          for (let index = 0; index < Categories.length; index++) {
+            const element = Categories[index];
+            masterList.push(element);            
+          }
+
+          setCategoryMaster(masterList);
+        }
+      },
+      error: (error) => {
+        debugger;
+      },
     });
   };
 
   const editClickHandler = ($event) => {
-    const { id } = $event;
-    history.push(`/masters/edit-category/${id}`);
+    // const { id } = $event;
+    // history.push(`/masters/edit-category/${id}`);
   };
 
-  const deleteClickHandler = ($event) => {
-    categoryMasterDbRef.child($event.id).remove();
-  };
+  const deleteClickHandler = ($event) => {};
   return (
     <>
       <table className="table">
@@ -45,14 +61,14 @@ const CategoryListComponent = () => {
         <tbody>
           {categoryMaster !== undefined &&
             categoryMaster.map((item) => (
-              <tr key={item.id}>
-                <td>{item.CategoryName}</td>
-                <td>{item.Description}</td>
+              <tr key={item._id}>
+                <td>{item.category_name}</td>
+                <td>{item.description}</td>
                 <td>
                   <input
                     className="form-check-input"
                     disabled={JSON.parse(true)}
-                    checked={JSON.parse(item.IsActive)}
+                    //checked={JSON.parse(item.IsActive)}
                     type="checkbox"
                   ></input>
                 </td>
@@ -60,7 +76,7 @@ const CategoryListComponent = () => {
                   <ButtonComponent
                     className="btn btn-success"
                     label="Edit"
-                    id={item.id}
+                    id={item._id}
                     onButtonClick={editClickHandler}
                   ></ButtonComponent>
                 </td>
@@ -68,7 +84,7 @@ const CategoryListComponent = () => {
                   <ButtonComponent
                     className="btn btn-danger"
                     label="Delete"
-                    id={item.id}
+                    id={item._id}
                     onButtonClick={deleteClickHandler}
                   ></ButtonComponent>
                 </td>
