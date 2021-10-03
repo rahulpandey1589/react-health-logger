@@ -42,11 +42,13 @@ const CategoryListComponent = () => {
   };
 
   const editClickHandler = ($event) => {
-    // const { id } = $event;
-    // history.push(`/masters/edit-category/${id}`);
+     const { id } = $event;
+     history.push(`/masters/edit-category/${id}`);
   };
 
-  const deleteClickHandler = ($event) => {};
+  const deleteClickHandler = ($event) => {
+    
+  };
   return (
     <>
       <table className="table">
@@ -68,7 +70,7 @@ const CategoryListComponent = () => {
                   <input
                     className="form-check-input"
                     disabled={JSON.parse(true)}
-                    //checked={JSON.parse(item.IsActive)}
+                    checked={JSON.parse(item.isactive)}
                     type="checkbox"
                   ></input>
                 </td>
