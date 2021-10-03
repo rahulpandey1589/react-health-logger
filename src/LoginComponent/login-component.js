@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { ajax } from "rxjs/ajax";
 import AuthContext from "../Store/auth-context";
 import AlertComponent from "../SharedComponent/alert";
 import "./login-component.css";
