@@ -1,6 +1,7 @@
 import DropdownComponent from "../../SharedComponent/dropdown-component";
 import firebase from "../../firebase";
 import { useEffect, useState } from "react";
+import axios from "../../Services/axios";
 
 const CategoryDropdownComponent = (props) => {
   const { onChange } = props;
@@ -12,15 +13,16 @@ const CategoryDropdownComponent = (props) => {
   }, []);
 
   const fetchDropdown = () => {
-    categoryMasterDbRef.on("value", (snapshot) => {
-      const response = snapshot.val();
+    axios
+    .get("/masters/category")
+    .then((response) => {
       const categories = [];
-
-      for (let id in response) {
+      for (let index = 0; index < response.data.data.length; index++) {
+        const element = response.data.data[index];
         categories.push({
-          text: response[id].CategoryName,
-          value: response[id].CategoryName,
-        });
+          text: element.category_name,
+          value: element._id,
+        }); 
       }
       setItems(categories);
     });

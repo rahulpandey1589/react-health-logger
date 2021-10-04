@@ -1,10 +1,8 @@
 import { useState, useCallback } from "react";
 
-import firebase from "../../firebase";
-import axios from '../../Services/axios';
+import axios from "../../Services/axios";
 import ButtonComponent from "../../SharedComponent/button-component";
 import CategoryDropdownComponent from "../CategoryMasterComponent/category-dropdown-component";
-import TestMasterModel from "../../Models/test-master-model";
 
 const AddTestComponent = () => {
   const [title, setTitle] = useState("");
@@ -37,12 +35,19 @@ const AddTestComponent = () => {
     }
   };
 
-  const addHandler = useCallback(() => {
-    const testMasterRef = firebase.ref("TestMaster");
-    let data = new TestMasterModel(title, description, category, price);
-    console.log(data);
-    testMasterRef.push(data);
-  }, []);
+  const addHandler = () => {
+    const testData = {
+      title: title,
+      description: description,
+      categoryId: category,
+      price: price,
+    };
+
+    debugger;
+    axios.post("/masters/test", testData).then((data) => {
+      debugger;
+    });
+  };
 
   const categoryChangeHandler = (data) => {
     setCategory(data);

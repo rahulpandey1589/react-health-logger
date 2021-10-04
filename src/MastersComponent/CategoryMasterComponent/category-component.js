@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ButtonComponent from "../../SharedComponent/button-component";
 import InputComponent from "../../SharedComponent/input-component";
+import customAxios from "../../Services/axios";
 
 const categoryDbRef = firebase.ref("Category");
 
@@ -50,11 +51,14 @@ const CategoryComponent = (props) => {
   const addCategory = () => {
     debugger;
     let categoryData = {
-      CategoryName: cName,
-      Description: cDescription,
-      IsActive: true,
+      category_name: cName,
+      description: cDescription,
+      isactive: true,
     };
-    categoryDbRef.push(categoryData);
+
+    customAxios.post("masters/category", categoryData).then((response) => {
+      alert("Records inserted!!!");
+    });
     clear();
   };
 
@@ -82,36 +86,36 @@ const CategoryComponent = (props) => {
 
   return (
     <>
-          <div className="row">
-            <div className="col-4">
-              <label htmlFor="category">Category Name</label>
-              <InputComponent
-                className="form-control"
-                id="txtCategory"
-                name="name"
-                getInputValue={handlerChange}
-              ></InputComponent>
-            </div>
-            <div className="col-4">
-              <label htmlFor="category">Description</label>
-              <InputComponent
-                id="txtCategoryDesc"
-                className="form-control"
-                name="description"
-                getInputValue={handlerChange}
-              ></InputComponent>
-            </div>
-          </div>
-          <br />
-          <div className="row">
-            <div className="col-4">
-              <ButtonComponent
-                label={actionName}
-                className="btn btn-success"
-                onButtonClick={onClickHandler}
-              ></ButtonComponent>
-            </div>
-          </div>
+      <div className="row">
+        <div className="col-4">
+          <label htmlFor="category">Category Name</label>
+          <InputComponent
+            className="form-control"
+            id="txtCategory"
+            name="name"
+            getInputValue={handlerChange}
+          ></InputComponent>
+        </div>
+        <div className="col-4">
+          <label htmlFor="category">Description</label>
+          <InputComponent
+            id="txtCategoryDesc"
+            className="form-control"
+            name="description"
+            getInputValue={handlerChange}
+          ></InputComponent>
+        </div>
+      </div>
+      <br />
+      <div className="row">
+        <div className="col-4">
+          <ButtonComponent
+            label={actionName}
+            className="btn btn-success"
+            onButtonClick={onClickHandler}
+          ></ButtonComponent>
+        </div>
+      </div>
     </>
   );
 };

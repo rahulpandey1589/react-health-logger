@@ -72,7 +72,6 @@ const LoginComponent = () => {
     const data = { username: username, password: password };
 
     axios.post("/auth/authenticate", data).then((response) => {
-      debugger;
       const { success, token, expiresIn } = response.data;
       if (success) {
         const expirationTime = new Date(
@@ -84,7 +83,6 @@ const LoginComponent = () => {
         alert("Invalid Credentials");
       }
     });
-
     clearState();
   };
 
