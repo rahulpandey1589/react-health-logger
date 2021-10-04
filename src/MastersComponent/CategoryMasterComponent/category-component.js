@@ -1,11 +1,9 @@
-import firebase from "../../firebase";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ButtonComponent from "../../SharedComponent/button-component";
 import InputComponent from "../../SharedComponent/input-component";
 import customAxios from "../../Services/axios";
 
-const categoryDbRef = firebase.ref("Category");
 
 const CategoryComponent = (props) => {
   const { actionName, categoryId } = props;

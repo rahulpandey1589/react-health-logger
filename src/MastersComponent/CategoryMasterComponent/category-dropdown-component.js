@@ -1,11 +1,9 @@
 import DropdownComponent from "../../SharedComponent/dropdown-component";
-import firebase from "../../firebase";
 import { useEffect, useState } from "react";
 import axios from "../../Services/axios";
 
 const CategoryDropdownComponent = (props) => {
   const { onChange } = props;
-  const categoryMasterDbRef = firebase.ref("Category");
   const [items, setItems] = useState([]);
 
   useEffect(() => {
