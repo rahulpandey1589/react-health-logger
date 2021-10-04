@@ -40,11 +40,10 @@ const CategoryComponent = (props) => {
       console.error("Invalid Category Id found");
       return;
     }
-
-    categoryDbRef.child(categoryId).once("value", function (data) {
-      const { CategoryName, Description, IsActive } = data.val();
-      document.getElementById("txtCategory").value = CategoryName;
-      document.getElementById("txtCategoryDesc").value = Description;
+    customAxios.get(`masters/category/${categoryId}`).then((response) => {
+       const {category_name,description} = response.data.data;
+       document.getElementById("txtCategory").value = category_name;
+       document.getElementById("txtCategoryDesc").value = description;
     });
   };
 
