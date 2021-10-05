@@ -18,7 +18,7 @@ const RegisterComponent = () => {
         setFirstName(value);
         break;
 
-      case "lastname":
+      case "lastName":
         setLastName(value);
         break;
 
@@ -45,7 +45,7 @@ const RegisterComponent = () => {
 
       })
       .catch((error) => {
-        
+         debugger;
       });
   };
 
@@ -84,6 +84,7 @@ const RegisterComponent = () => {
           <input
             htmlFor="password"
             type="password"
+            name="password"
             placeholder="Please Enter Password"
             className="form-control"
             onChange={handleChange}
