@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
 import AlertComponent from "../SharedComponent/alert";
 import "./login-component.css";
-import { LoginErrorModel } from "../Models/login-model";
 import axios from "../Services/axios";
 
 const LoginComponent = () => {
