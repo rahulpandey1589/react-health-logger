@@ -23,7 +23,7 @@ const responseHandler = (response) => {
 };
 
 const errorHandler = (error) => {
-  return Promise.reject(error);
+  return Promise.reject(error.response);
 };
 
 customAxios.interceptors.request.use(

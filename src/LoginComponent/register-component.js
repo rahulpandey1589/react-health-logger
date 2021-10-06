@@ -4,7 +4,7 @@ import customAxios from "../Services/axios";
 
 const RegisterComponent = () => {
   const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+  const [lastname, setLastName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -41,11 +41,9 @@ const RegisterComponent = () => {
     };
     customAxios
       .post("/auth/register", data)
-      .then((response) => {
-
-      })
+      .then((response) => {})
       .catch((error) => {
-         debugger;
+        debugger;
       });
   };
 

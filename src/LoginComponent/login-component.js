@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import AuthContext from "../Store/auth-context";
-import AlertComponent from "../SharedComponent/alert";
 import "./login-component.css";
 import axios from "../Services/axios";
 
@@ -14,7 +13,7 @@ const LoginComponent = () => {
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
   const authContext = useContext(AuthContext);
-  const displayAlert = false;
+  let displayAlert = false;
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -70,18 +69,28 @@ const LoginComponent = () => {
 
     const data = { username: username, password: password };
 
-    axios.post("/auth/authenticate", data).then((response) => {
-      const { success, token, expiresIn } = response.data;
-      if (success) {
-        const expirationTime = new Date(
-          new Date().getTime() + +expiresIn * 1000
-        );
-        authContext.login(token, expirationTime.toISOString());
-        history.push("/dashboard");
-      } else {
-        alert("Invalid Credentials");
-      }
-    });
+    axios
+      .post("/auth/authenticate", data)
+      .then((response) => {
+        const { success, token, expiresIn } = response.data;
+
+        if (success) {
+          const expirationTime = new Date(
+            new Date().getTime() + +expiresIn * 1000
+          );
+          authContext.login(token, expirationTime.toISOString());
+          history.push("/dashboard");
+        } else {
+          alert("Invalid Credentials");
+        }
+      })
+      .catch((error) => {
+        debugger;
+        displayAlert = true;
+        setTimeout(() => {
+          displayAlert = false;
+        }, 5000);
+      });
     clearState();
   };
 
@@ -122,7 +131,7 @@ const LoginComponent = () => {
         </div>
         <br />
         <div className="row">
-          <div className="col offset-2">
+          <div className="col-md-4 offset-4">
             <button
               disabled={!isformValid}
               type="submit"
@@ -130,19 +139,7 @@ const LoginComponent = () => {
             >
               Login
             </button>
-          </div>
-          <div className="col-md-4">
             <a href="www.google.com">Forgot Password</a>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-2 offset-4">
-            {displayAlert && (
-              <AlertComponent
-                className="alert alert-danger"
-                displayText="Please enter"
-              ></AlertComponent>
-            )}
           </div>
         </div>
       </div>

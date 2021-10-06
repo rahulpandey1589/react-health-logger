@@ -1,5 +1,9 @@
-label{
-    font-family: 'Times New Roman', Times, serif;
-    font-style:normal;
-    font-size: large;
-   }
+label {
+  font-family: "Times New Roman", Times, serif;
+  font-style: normal;
+  font-size: large;
+}
+
+button {
+  margin: 1rem;
+}
