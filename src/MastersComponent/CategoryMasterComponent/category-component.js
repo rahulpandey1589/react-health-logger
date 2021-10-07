@@ -4,7 +4,6 @@ import ButtonComponent from "../../SharedComponent/button-component";
 import InputComponent from "../../SharedComponent/input-component";
 import customAxios from "../../Services/axios";
 
-
 const CategoryComponent = (props) => {
   const { actionName, categoryId } = props;
   const history = useHistory();
@@ -39,9 +38,9 @@ const CategoryComponent = (props) => {
       return;
     }
     customAxios.get(`masters/category/${categoryId}`).then((response) => {
-       const {category_name,description} = response.data.data;
-       document.getElementById("txtCategory").value = category_name;
-       document.getElementById("txtCategoryDesc").value = description;
+      const { category_name, description } = response.data.data;
+      document.getElementById("txtCategory").value = category_name;
+      document.getElementById("txtCategoryDesc").value = description;
     });
   };
 
@@ -51,8 +50,8 @@ const CategoryComponent = (props) => {
       description: cDescription,
       isactive: true,
     };
-
     customAxios.post("masters/category", categoryData).then((response) => {
+      alert('Category Created!!!');
     });
     clear();
   };
@@ -67,8 +66,9 @@ const CategoryComponent = (props) => {
   };
 
   const clear = () => {
-    // setCategory("");
-    // setDescription("");
+    document.getElementById("txtCategory").value = '';
+    document.getElementById("txtCategoryDesc").value = '';
+
   };
 
   const onClickHandler = () => {

@@ -3,6 +3,7 @@ import ButtonComponent from "../../SharedComponent/button-component";
 import { useHistory } from "react-router-dom";
 import axios from '../../Services/axios';
 import openSocket from 'socket.io-client';
+import customAxios from "../../Services/axios";
 
 
 const CategoryListComponent = () => {
@@ -13,9 +14,9 @@ const CategoryListComponent = () => {
     loadCategory();
     console.log('I am loaded');
     const socket = openSocket('http://localhost:7000');
-    socket.on('category',data =>{
-      if(data.action === "addCategory"){
-        bindCategoryToGrid(data.category);
+    socket.on('category',response =>{
+      if(response.action === "addCategory"){
+        //alert(`Category added with data ${response.data.description}`)
       }
     })
   }, []);
@@ -37,7 +38,7 @@ const CategoryListComponent = () => {
     axios
       .get('/masters/category')
       .then((response) => {
-        bindCategoryToGrid();
+        bindCategoryToGrid(response);
       });
   };
 
@@ -46,7 +47,18 @@ const CategoryListComponent = () => {
     history.push(`/masters/edit-category/${id}`);
   };
 
-  const deleteClickHandler = ($event) => {};
+  const deleteClickHandler = ($event) => {
+    const {id} = $event
+     if(id !== undefined){
+      customAxios
+       .delete(`/masters/category/${id}`)
+       .then((data) =>{
+           alert('Record Deleted!!!');
+           loadCategory();
+       });
+    }
+    
+  };
   return (
     <>
       <table className="table">
