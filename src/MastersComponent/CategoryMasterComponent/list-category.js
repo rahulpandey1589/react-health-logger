@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import ButtonComponent from "../../SharedComponent/button-component";
 import { useHistory } from "react-router-dom";
 import axios from '../../Services/axios';
+import openSocket from 'socket.io-client';
+
 
 const CategoryListComponent = () => {
   const [categoryMaster, setCategoryMaster] = useState([]);
@@ -9,22 +11,33 @@ const CategoryListComponent = () => {
 
   useEffect(() => {
     loadCategory();
+    console.log('I am loaded');
+    const socket = openSocket('http://localhost:7000');
+    socket.on('category',data =>{
+      if(data.action === "addCategory"){
+        bindCategoryToGrid(data.category);
+      }
+    })
   }, []);
+
+  const bindCategoryToGrid =(categoryReponse) =>{
+    const { success, message, data: Categories } = categoryReponse.data;
+    if (success) {
+      const masterList = [];
+      for (let index = 0; index < Categories.length; index++) {
+        const element = Categories[index];
+        masterList.push(element);
+      }
+      setCategoryMaster(masterList);
+    }
+  }
 
   const loadCategory = () => {
     debugger;
     axios
       .get('/masters/category')
       .then((response) => {
-        const { success, message, data: Categories } = response.data;
-        if (success) {
-          const masterList = [];
-          for (let index = 0; index < Categories.length; index++) {
-            const element = Categories[index];
-            masterList.push(element);
-          }
-          setCategoryMaster(masterList);
-        }
+        bindCategoryToGrid();
       });
   };
 

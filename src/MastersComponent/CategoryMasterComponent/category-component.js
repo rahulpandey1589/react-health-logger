@@ -46,7 +46,6 @@ const CategoryComponent = (props) => {
   };
 
   const addCategory = () => {
-    debugger;
     let categoryData = {
       category_name: cName,
       description: cDescription,
@@ -54,7 +53,6 @@ const CategoryComponent = (props) => {
     };
 
     customAxios.post("masters/category", categoryData).then((response) => {
-      alert("Records inserted!!!");
     });
     clear();
   };

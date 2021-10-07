@@ -42,8 +42,6 @@ const AddTestComponent = () => {
       categoryId: category,
       price: price,
     };
-
-    debugger;
     axios.post("/masters/test", testData).then((data) => {
       debugger;
     });
