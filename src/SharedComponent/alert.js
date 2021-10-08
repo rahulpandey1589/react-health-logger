@@ -1,10 +1,13 @@
-const AlertComponent = (props) => {
-  const { className, displayText } = props;
+import { Alert } from "react-bootstrap";
 
+const AlertComponent = (props) => {
+  let variant = "danger";
   return (
-    <div className={className} role="alert">
-      {displayText}
-    </div>
+    <>
+      <Alert key={1} variant={variant}>
+        This is a {variant} alert—check it out!
+      </Alert>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
 import "./login-component.css";
 import axios from "../Services/axios";
+import AlertComponent from "../SharedComponent/alert";
 
 const LoginComponent = () => {
   const [username, setUserName] = useState("");
@@ -13,7 +14,7 @@ const LoginComponent = () => {
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
   const authContext = useContext(AuthContext);
-  let displayAlert = false;
+  let showAlert = true;
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -85,10 +86,11 @@ const LoginComponent = () => {
         }
       })
       .catch((error) => {
-        debugger;
-        displayAlert = true;
+        let errorMessages = error.data.errors;
+
+        showAlert = true;
         setTimeout(() => {
-          displayAlert = false;
+          showAlert = false;
         }, 5000);
       });
     clearState();
@@ -100,50 +102,57 @@ const LoginComponent = () => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <div className="container center">
+    <>
+      <div className="container">
         <div className="row col-md-4 offset-2">
-          <label name="username">UserName</label>
-          <input
-            name="username"
-            type="text"
-            value={username}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="Please Enter UserName"
-          />
-          {emailError.length > 0 && (
-            <span className="span-error">{emailError}</span>
-          )}
-          <br />
-          <label name="password">Password</label>
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="Please Enter Password"
-          />
-          {passwordError.length > 0 && (
-            <span className="span-error">{passwordError}</span>
-          )}
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-md-4 offset-4">
-            <button
-              disabled={!isformValid}
-              type="submit"
-              className="btn btn-primary"
-            >
-              Login
-            </button>
-            <a href="www.google.com">Forgot Password</a>
-          </div>
+          {showAlert && <AlertComponent></AlertComponent>}
         </div>
       </div>
-    </form>
+      <form onSubmit={handleFormSubmit}>
+        <div className="container center">
+          <div className="row col-md-4 offset-2">
+            <label name="username">UserName</label>
+            <input
+              name="username"
+              type="text"
+              value={username}
+              onChange={handleChange}
+              className="form-control"
+              placeholder="Please Enter UserName"
+            />
+            {emailError.length > 0 && (
+              <span className="span-error">{emailError}</span>
+            )}
+            <br />
+            <label name="password">Password</label>
+            <input
+              name="password"
+              type="password"
+              value={password}
+              onChange={handleChange}
+              className="form-control"
+              placeholder="Please Enter Password"
+            />
+            {passwordError.length > 0 && (
+              <span className="span-error">{passwordError}</span>
+            )}
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-md-4 offset-4">
+              <button
+                disabled={!isformValid}
+                type="submit"
+                className="btn btn-primary"
+              >
+                Login
+              </button>
+              <a href="www.google.com">Forgot Password</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </>
   );
 };
 
