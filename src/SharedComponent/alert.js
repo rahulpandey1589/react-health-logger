@@ -1,11 +1,13 @@
 import { Alert } from "react-bootstrap";
 
 const AlertComponent = (props) => {
-  let variant = "danger";
+  const { variant, errors } = props;
   return (
     <>
       <Alert key={1} variant={variant}>
-        This is a {variant} alert—check it out!
+        {errors.map((x) => (
+          <li>{x}</li>
+        ))}
       </Alert>
     </>
   );

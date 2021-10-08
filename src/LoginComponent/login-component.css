@@ -1,14 +1,17 @@
-.span-error{
-    color: red;
-    font-size: medium;
+.span-error {
+  color: red;
+  font-size: medium;
 }
 
-.center{
-    margin-top: 10%;
-    margin-left: 20%;
+.center {
+  margin-top: 10%;
+  margin-left: 20%;
 }
 
 button {
-    margin: 1rem 0 0 0;
-  }
-  
+  margin: 1rem 0 0 0;
+}
+
+alertBox{
+  margin-top: 1rem;
+}

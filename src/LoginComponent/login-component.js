@@ -15,6 +15,9 @@ const LoginComponent = () => {
   const history = useHistory();
   const authContext = useContext(AuthContext);
   let showAlert = true;
+  let errors=[];
+  errors.push('UserName is incorrect');
+  errors.push('Password is incorrect');
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -87,6 +90,9 @@ const LoginComponent = () => {
       })
       .catch((error) => {
         let errorMessages = error.data.errors;
+        errors.push('UserName is incorrect');
+        errors.push('Password is incorrect');
+
 
         showAlert = true;
         setTimeout(() => {
@@ -103,13 +109,11 @@ const LoginComponent = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="row col-md-4 offset-2">
-          {showAlert && <AlertComponent></AlertComponent>}
-        </div>
+      <div className="alertBox">
+        {(showAlert || errors.length > 0 ) && <AlertComponent variant="danger" errors={errors}></AlertComponent>}
       </div>
-      <form onSubmit={handleFormSubmit}>
-        <div className="container center">
+      <div className="container center">
+        <form onSubmit={handleFormSubmit}>
           <div className="row col-md-4 offset-2">
             <label name="username">UserName</label>
             <input
@@ -150,8 +154,8 @@ const LoginComponent = () => {
               <a href="www.google.com">Forgot Password</a>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </>
   );
 };
