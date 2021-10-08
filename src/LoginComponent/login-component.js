@@ -14,11 +14,9 @@ const LoginComponent = () => {
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
   const authContext = useContext(AuthContext);
-  let showAlert = true;
-  let errors=[];
-  errors.push('UserName is incorrect');
-  errors.push('Password is incorrect');
-
+  let showAlert = false;
+  let alertMessage = [];
+ 
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -90,10 +88,9 @@ const LoginComponent = () => {
       })
       .catch((error) => {
         let errorMessages = error.data.errors;
-        errors.push('UserName is incorrect');
-        errors.push('Password is incorrect');
-
-
+        errorMessages.map((x) => {
+          alertMessage.push(x);
+        });
         showAlert = true;
         setTimeout(() => {
           showAlert = false;
@@ -110,7 +107,12 @@ const LoginComponent = () => {
   return (
     <>
       <div className="alertBox">
-        {(showAlert || errors.length > 0 ) && <AlertComponent variant="danger" errors={errors}></AlertComponent>}
+        {(showAlert || alertMessage.length > 0) && (
+          <AlertComponent
+            variant="danger"
+            errors={alertMessage}
+          ></AlertComponent>
+        )}
       </div>
       <div className="container center">
         <form onSubmit={handleFormSubmit}>
