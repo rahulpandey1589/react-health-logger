@@ -14,8 +14,8 @@ const LoginComponent = () => {
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
   const authContext = useContext(AuthContext);
-  let showAlert = false;
-  let alertMessage = [];
+  const [showAlert,setshowAlert] = useState(false);
+  const [alertMessage,setAlertMessage] = useState(false);
  
   const handleChange = (event) => {
     event.preventDefault();
@@ -87,13 +87,16 @@ const LoginComponent = () => {
         }
       })
       .catch((error) => {
+        setshowAlert(true);
         let errorMessages = error.data.errors;
-        errorMessages.map((x) => {
-          alertMessage.push(x);
+        let errorList =[];
+        errorMessages.forEach(element => {
+          errorList.push(element.msg);
         });
-        showAlert = true;
+
+        setAlertMessage(errorList);
         setTimeout(() => {
-          showAlert = false;
+            setshowAlert(false);
         }, 5000);
       });
     clearState();
@@ -103,6 +106,7 @@ const LoginComponent = () => {
     setUserName("");
     setPassword("");
   };
+
 
   return (
     <>
