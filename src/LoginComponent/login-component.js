@@ -72,13 +72,13 @@ const LoginComponent = () => {
     axios
       .post("/auth/authenticate", data)
       .then((data) => {
-        const { token, expiresIn } = data.data.response;
+        const { token, expiresIn,displayName,role } = data.data.response;
 
         if (data.data.success) {
           const expirationTime = new Date(
             new Date().getTime() + +expiresIn * 1000
           );
-          authContext.login(token, expirationTime.toISOString());
+          authContext.login(token, expirationTime.toISOString(),displayName,role);
           history.push("/dashboard");
         }
         clearState();
