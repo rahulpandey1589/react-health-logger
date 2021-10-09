@@ -15,6 +15,7 @@ import MasterRoutes from "./master-routes";
 const NavigationComponent = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
+  const isAdmin = authCtx.role == "admin" ? true : false;
 
   const logoutHandler = () => {
     authCtx.logout();
@@ -27,7 +28,7 @@ const NavigationComponent = () => {
           <Navbar.Brand as={Link} to={"/dashboard"}>
             Health Logger
           </Navbar.Brand>
-          {isLoggedIn && (
+          {isLoggedIn && isAdmin && (
             <MasterNavigationComponent></MasterNavigationComponent>
           )}
 

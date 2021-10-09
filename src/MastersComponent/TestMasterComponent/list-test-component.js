@@ -22,9 +22,10 @@ const ListExistingTestComponent = () => {
 
   const loadAllTest = () => {
     axios.get("/masters/test").then((response) => {
+      debugger;
       const masterList = [];
-      for (let index = 0; index < response.data.data.length; index++) {
-        const element = response.data.data[index];
+      for (let index = 0; index < response.data.response.length; index++) {
+        const element = response.data.response[index];
         masterList.push(element);
       }
       setMasters(masterList);
