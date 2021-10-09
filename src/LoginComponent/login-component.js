@@ -14,9 +14,9 @@ const LoginComponent = () => {
   const [isformValid, setFormValid] = useState(false);
   const history = useHistory();
   const authContext = useContext(AuthContext);
-  const [showAlert,setshowAlert] = useState(false);
-  const [alertMessage,setAlertMessage] = useState(false);
- 
+  const [showAlert, setshowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -68,38 +68,35 @@ const LoginComponent = () => {
     if (!isformValid) {
       return;
     }
-
     const data = { username: username, password: password };
-
     axios
       .post("/auth/authenticate", data)
-      .then((response) => {
-        const { success, token, expiresIn } = response.data;
+      .then((data) => {
+        const { token, expiresIn } = data.data.response;
 
-        if (success) {
+        if (data.data.success) {
           const expirationTime = new Date(
             new Date().getTime() + +expiresIn * 1000
           );
           authContext.login(token, expirationTime.toISOString());
           history.push("/dashboard");
-        } else {
-          alert("Invalid Credentials");
         }
+        clearState();
       })
       .catch((error) => {
-        setshowAlert(true);
+        debugger;
         let errorMessages = error.data.errors;
-        let errorList =[];
-        errorMessages.forEach(element => {
+        let errorList = [];
+        errorMessages.forEach((element) => {
           errorList.push(element.msg);
         });
 
         setAlertMessage(errorList);
+        setshowAlert(true);
         setTimeout(() => {
-            setshowAlert(false);
-        }, 5000);
+          setshowAlert(false);
+        }, 2000);
       });
-    clearState();
   };
 
   const clearState = () => {
@@ -107,11 +104,10 @@ const LoginComponent = () => {
     setPassword("");
   };
 
-
   return (
     <>
       <div className="alertBox">
-        {(showAlert || alertMessage.length > 0) && (
+        {showAlert && (
           <AlertComponent
             variant="danger"
             errors={alertMessage}
