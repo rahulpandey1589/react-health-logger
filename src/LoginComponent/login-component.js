@@ -84,7 +84,6 @@ const LoginComponent = () => {
         clearState();
       })
       .catch((error) => {
-        debugger;
         let errorMessages = error.data.errors;
         let errorList = [];
         errorMessages.forEach((element) => {

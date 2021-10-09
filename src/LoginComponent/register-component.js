@@ -1,12 +1,15 @@
 import { useState } from "react";
 import ButtonComponent from "../SharedComponent/button-component";
 import customAxios from "../Services/axios";
+import AlertComponent from "../SharedComponent/alert";
 
 const RegisterComponent = () => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState(""); 
-  const [email, setEmail] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [variant,setVariant] = useState('');
 
   const handleChange = ($event) => {
     $event.preventDefault();
@@ -14,90 +17,99 @@ const RegisterComponent = () => {
     const { name, value } = $event.target;
 
     switch (name) {
-      case "firstName":
-        setFirstName(value);
-        break;
-
-      case "lastName":
-        setLastName(value);
-        break;
-
-      case "email":
-        setEmail(value);
+      case "username":
+        setUserName(value);
         break;
 
       case "password":
         setPassword(value);
+        break;
+
+      case "confirmpassword":
+        setConfirmPassword(value);
         break;
     }
   };
 
   const onClickHandler = () => {
     const data = {
-      first_name: firstname,
-      last_name: lastname,
-      username: email,
+      username: username,
       password: password,
+      confirmPassword:confirmPassword
     };
     customAxios
       .post("/auth/register", data)
-      .then((response) => {})
+      .then((response) => {
+        setVariant('success');
+        let errorList = [];
+        errorList.push('User Created Gracefully!!!');
+        setAlertMessage(errorList);
+
+      })
       .catch((error) => {
         debugger;
+        let errorMessages = error.data.errors;
+        let errorList = [];
+        errorMessages.forEach((element) => {
+          errorList.push(element.msg);
+        });
+        setAlertMessage(errorList);
+        setShowAlert(true);
+        setVariant('danger');
       });
   };
 
   return (
-    <div className="container center">
-      <form>
-        <div className="row col-md-4 offset-2">
-          <label htmlFor="username">First Name</label>
-          <input
-            name="firstName"
-            type="text"
-            placeholder="Please Enter FirstName"
-            className="form-control"
-            onChange={handleChange}
-          />
+    <>
+      <div className="alertBox">
+        {showAlert && (
+          <AlertComponent
+            variant={variant}
+            errors={alertMessage}
+          ></AlertComponent>
+        )}
+      </div>
+      <div className="container center">
+        <form>
+          <div className="row col-md-4 offset-2">
+            <label htmlFor="username">UserName</label>
+            <input
+              name="username"
+              type="text"
+              placeholder="Please Enter UserName"
+              className="form-control"
+              onChange={handleChange}
+            />
+            <br />
+            <label htmlFor="password">Password</label>
+            <input
+              name="password"
+              type="password"
+              placeholder="Please Enter Password"
+              className="form-control"
+              onChange={handleChange}
+            />
+            <br />
+            <label htmlFor="confirmpassword">Confirm Password</label>
+            <input
+              name="confirmpassword"
+              type="password"
+              placeholder="Please Enter Email Address"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </div>
           <br />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            name="lastName"
-            type="text"
-            placeholder="Please Enter LastName"
-            className="form-control"
-            onChange={handleChange}
-          />
-          <br />
-          <label htmlFor="email">Email Address</label>
-          <input
-            name="email"
-            type="text"
-            placeholder="Please Enter Email Address"
-            className="form-control"
-            onChange={handleChange}
-          />
-          <br />
-          <label htmlFor="password">Password</label>
-          <input
-            htmlFor="password"
-            type="password"
-            name="password"
-            placeholder="Please Enter Password"
-            className="form-control"
-            onChange={handleChange}
-          />
-        </div>
-        <br />
-        <div className="row col-md-4 offset-2">
-          <ButtonComponent
-            label="Register"
-            className="btn btn-success"
-            onButtonClick={onClickHandler}
-          ></ButtonComponent>
-        </div>
-      </form>
-    </div>
+          <div className="row col-md-4 offset-2">
+            <ButtonComponent
+              label="Register"
+              className="btn btn-primary"
+              onButtonClick={onClickHandler}
+            ></ButtonComponent>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
