@@ -1,4 +1,4 @@
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Nav, NavDropdown } from "react-bootstrap";
 
 const MasterNavigationComponent = () => {
@@ -12,8 +12,6 @@ const MasterNavigationComponent = () => {
           <NavDropdown.Item as={Link} to={"/masters/add-category"}>
             Category Master
           </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
         </NavDropdown>
       </Nav>
     </>

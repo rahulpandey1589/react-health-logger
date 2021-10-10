@@ -12,6 +12,9 @@ import DashboardComponent from "../DashboardComponent/dashboard-component";
 import MasterNavigationComponent from "./masters-navigation-component";
 import MasterRoutes from "./master-routes";
 
+import UserNavigationComponent from "./users-navigationcomponent";
+import UserDetailRoutes from "./user-detail-routes";
+
 const NavigationComponent = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
@@ -31,8 +34,10 @@ const NavigationComponent = () => {
           {isLoggedIn && isAdmin && (
             <MasterNavigationComponent></MasterNavigationComponent>
           )}
-
           <Nav className="justify-content-end">
+            {isLoggedIn && (
+             <UserNavigationComponent></UserNavigationComponent>
+            )}
             {!isLoggedIn && (
               <Nav.Link as={Link} to={"/login"}>
                 Login
@@ -57,7 +62,8 @@ const NavigationComponent = () => {
         <Route path="/register" component={RegisterComponent}></Route>
         <Route path="/home" component={HomeComponent}></Route>
         <Route path="/dashboard" component={DashboardComponent}></Route>
-        <MasterRoutes isLoggedIn={isLoggedIn}></MasterRoutes>
+        <MasterRoutes  path="/masters" isLoggedIn={isLoggedIn}></MasterRoutes>
+        <UserDetailRoutes path="/user" isLoggedIn={isLoggedIn}></UserDetailRoutes>
         <Route path="*">
           <Redirect to="/"></Redirect>
         </Route>
