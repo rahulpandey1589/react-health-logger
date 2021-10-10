@@ -3,3 +3,6 @@ label {
   font-style: normal;
   font-size: large;
 }
+.container-fluid{
+  margin-left: 15em;
+}

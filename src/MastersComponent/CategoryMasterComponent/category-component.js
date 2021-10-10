@@ -18,7 +18,6 @@ const CategoryComponent = (props) => {
   }, [categoryId]);
 
   const handlerChange = ($value) => {
-    debugger;
     const { key, value } = $value;
     switch (key) {
       case "name":

@@ -5,7 +5,7 @@ const UserNavigationComponent = () => {
   return (
     <>
       <Nav className="me-auto">
-        <NavDropdown title="Profile Setting" id="basic-nav-dropdown">
+        <NavDropdown title="Profile Settings" id="basic-nav-dropdown">
           <NavDropdown.Item as={Link} to={"/user/details"}>
             Edit Profile
           </NavDropdown.Item>

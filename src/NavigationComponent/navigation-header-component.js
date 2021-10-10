@@ -1,19 +1,19 @@
 import { Link, Route, Switch, Redirect } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container,Image } from "react-bootstrap";
 import { useContext } from "react";
-
 import App from "../App";
+
 import HomeComponent from "../HomeComponent/home-component";
 import LoginComponent from "../LoginComponent/login-component";
 import RegisterComponent from "../LoginComponent/register-component";
 import AuthContext from "../Store/auth-context";
 import DashboardComponent from "../DashboardComponent/dashboard-component";
 
-import MasterNavigationComponent from "./masters-navigation-component";
+import UserDetailRoutes from "./user-detail-routes";
 import MasterRoutes from "./master-routes";
 
+import MasterNavigationComponent from "./masters-navigation-component";
 import UserNavigationComponent from "./users-navigationcomponent";
-import UserDetailRoutes from "./user-detail-routes";
 
 const NavigationComponent = () => {
   const authCtx = useContext(AuthContext);
