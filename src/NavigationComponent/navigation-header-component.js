@@ -22,6 +22,7 @@ const NavigationComponent = () => {
 
   const logoutHandler = () => {
     authCtx.logout();
+    localStorage.clear();
   };
 
   return (
