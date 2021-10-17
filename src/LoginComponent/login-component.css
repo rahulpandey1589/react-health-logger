@@ -1,4 +1,4 @@
-.span-error {
+.error {
   color: red;
   font-size: medium;
 }
@@ -15,3 +15,4 @@ button {
 alertBox{
   margin-top: 1rem;
 }
+

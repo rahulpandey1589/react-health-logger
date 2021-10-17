@@ -1,87 +1,70 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { useFormik } from "formik";
 
 import AuthContext from "../Store/auth-context";
 import "./login-component.css";
 import axios from "../Services/axios";
 import AlertComponent from "../SharedComponent/alert";
 
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.username) {
+    errors.username = "Required";
+  } else if (values.username.length > 250) {
+    errors.username = "Username should be less than 250 characters.";
+  } else if (
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
+  ) {
+    errors.username = "Invalid email address";
+  }
+
+  if (!values.password) {
+    errors.password = "Required";
+  } else if (values.password.length < 5) {
+    errors.password = "Password should be atleast 5 chracters long";
+  } else if (values.password > 15) {
+    errors.password = "Password should be less than  15 chracters long";
+  }
+  return errors;
+};
+
 const LoginComponent = () => {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [isformValid, setFormValid] = useState(false);
-  const history = useHistory();
-  const authContext = useContext(AuthContext);
-  const [showAlert, setshowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
+  const authContext  = useContext(AuthContext);
+  const history= useHistory();
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setFormValid(false);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      submitLoginForm(values);
+    },
+  });
 
-    switch (name) {
-      case "username":
-        validateUserName(value);
-        setUserName(value);
-        break;
-      case "password":
-        validateUserPassword(value);
-        setPassword(value);
-        break;
-      default:
-        break;
-    }
-
-    if (
-      emailError.length === 0 &&
-      passwordError.length === 0 &&
-      username.length > 0 &&
-      password.length > 0
-    ) {
-      setFormValid(true);
-    }
-  };
-
-  const validateUserName = (value) => {
-    if (!value.includes("@")) {
-      setEmailError("The entered email address is not in correct format.");
-    } else {
-      setEmailError("");
-    }
-  };
-
-  const validateUserPassword = (password) => {
-    if (password.length <= 5 || password.length > 15) {
-      setPasswordError(
-        "Password should be greater than 5 character and should be less than 15."
-      );
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const handleFormSubmit = ($event) => {
-    $event.preventDefault();
-    if (!isformValid) {
-      return;
-    }
+  const submitLoginForm = (values) => {
+    const { username, password } = values;
     const data = { username: username, password: password };
     axios
       .post("/auth/authenticate", data)
       .then((data) => {
-        const { token, expiresIn,displayName,role } = data.data.response;
+        const { token, expiresIn, displayName, role } = data.data.response;
 
         if (data.data.success) {
           const expirationTime = new Date(
             new Date().getTime() + +expiresIn * 1000
           );
-          authContext.login(token, expirationTime.toISOString(),displayName,role);
+          authContext.login(
+            token,
+            expirationTime.toISOString(),
+            displayName,
+            role
+          );
           history.push("/dashboard");
         }
-        clearState();
       })
       .catch((error) => {
         let errorMessages = error.data.errors;
@@ -89,64 +72,49 @@ const LoginComponent = () => {
         errorMessages.forEach((element) => {
           errorList.push(element.msg);
         });
-
-        setAlertMessage(errorList);
-        setshowAlert(true);
-        setTimeout(() => {
-          setshowAlert(false);
-        }, 2000);
       });
-  };
-
-  const clearState = () => {
-    setUserName("");
-    setPassword("");
   };
 
   return (
     <>
-      <div className="alertBox">
-        {showAlert && (
-          <AlertComponent
-            variant="danger"
-            errors={alertMessage}
-          ></AlertComponent>
-        )}
-      </div>
       <div className="container center">
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="row col-md-4 offset-2">
             <label name="username">UserName</label>
             <input
+              id="username"
               name="username"
               type="text"
-              value={username}
-              onChange={handleChange}
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="form-control"
               placeholder="Please Enter UserName"
             />
-            {emailError.length > 0 && (
-              <span className="span-error">{emailError}</span>
-            )}
+            {formik.touched.username && formik.errors.username ? (
+              <div className="error">{formik.errors.username}</div>
+            ) : null}
             <br />
             <label name="password">Password</label>
             <input
+              id="password"
               name="password"
               type="password"
-              value={password}
-              onChange={handleChange}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="form-control"
               placeholder="Please Enter Password"
             />
-            {passwordError.length > 0 && (
-              <span className="span-error">{passwordError}</span>
-            )}
+            {formik.touched.password && formik.errors.password ? (
+              <div className="error">{formik.errors.password}</div>
+            ) : null}
           </div>
           <br />
           <div className="row">
             <div className="col-md-4 offset-4">
               <button
-                disabled={!isformValid}
+                disabled={!formik.isValid}
                 type="submit"
                 className="btn btn-primary"
               >

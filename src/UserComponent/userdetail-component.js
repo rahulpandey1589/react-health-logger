@@ -22,7 +22,6 @@ const UserDetailComponent = () => {
       .then((response) => {
         if (response.data.success) {
           const { first_name, last_name } = response.data.data;
-
           document.getElementById("txtFirstName").value = first_name;
           document.getElementById("txtLastName").value = last_name;
         }
