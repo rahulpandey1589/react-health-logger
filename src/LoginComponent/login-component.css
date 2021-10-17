@@ -1,6 +1,7 @@
 .error {
+  font-size: 12px;
   color: red;
-  font-size: medium;
+  margin-top: 0.25rem;
 }
 
 .center {
