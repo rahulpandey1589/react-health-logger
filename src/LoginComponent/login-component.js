@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 
@@ -31,8 +31,10 @@ const validate = (values) => {
 };
 
 const LoginComponent = () => {
-  const authContext  = useContext(AuthContext);
-  const history= useHistory();
+  const authContext = useContext(AuthContext);
+  const history = useHistory();
+  const [showAlert, setshowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -72,11 +74,24 @@ const LoginComponent = () => {
         errorMessages.forEach((element) => {
           errorList.push(element.msg);
         });
+        setAlertMessage(errorList);
+        setshowAlert(true);
+        setTimeout(() => {
+          setshowAlert(false);
+        }, 2000);
       });
   };
 
   return (
     <>
+      <div className="alertBox">
+        {showAlert && (
+          <AlertComponent
+            variant="danger"
+            errors={alertMessage}
+          ></AlertComponent>
+        )}
+      </div>
       <div className="container center">
         <form onSubmit={formik.handleSubmit}>
           <div className="row col-md-4 offset-2">
