@@ -2,49 +2,67 @@ import { useState } from "react";
 import ButtonComponent from "../SharedComponent/button-component";
 import customAxios from "../Services/axios";
 import AlertComponent from "../SharedComponent/alert";
+import { useFormik } from "formik";
+
+const validate = (values) => {
+  const errors = {};
+  const { username, password, confirmPassword } = values;
+
+  if (!username) {
+    errors.username = "Username is required.";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(username)) {
+    errors.username = "Invalid email address";
+  }
+
+  if (!password) {
+    errors.password = "Password is required";
+  } else if (password.length < 5 || password.length > 15) {
+    errors.password =
+      "Password should be greater than 5 characters and should be less than 15.";
+  }
+
+  if (!confirmPassword) {
+    errors.confirmPassword = "Confirm Password is mandatory";
+  } else if (confirmPassword !== password) {
+    errors.confirmPassword =
+      "Password and Confirm Password should match with each other.";
+  }
+
+  return errors;
+};
 
 const RegisterComponent = () => {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(false);
-  const [variant,setVariant] = useState('');
+  const [variant, setVariant] = useState("");
 
-  const handleChange = ($event) => {
-    $event.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      submitForm(values);
+    },
+  });
 
-    const { name, value } = $event.target;
+  const submitForm = (values) => {
+    const { username, password, confirmPassword } = values;
 
-    switch (name) {
-      case "username":
-        setUserName(value);
-        break;
-
-      case "password":
-        setPassword(value);
-        break;
-
-      case "confirmpassword":
-        setConfirmPassword(value);
-        break;
-    }
-  };
-
-  const onClickHandler = () => {
     const data = {
       username: username,
       password: password,
-      confirmPassword:confirmPassword
+      confirmPassword: confirmPassword,
     };
     customAxios
       .post("/auth/register", data)
       .then((response) => {
-        setVariant('success');
+        setVariant("success");
         let errorList = [];
-        errorList.push('User Created Gracefully!!!');
+        errorList.push("User Created Gracefully!!!");
         setAlertMessage(errorList);
-
       })
       .catch((error) => {
         debugger;
@@ -55,7 +73,7 @@ const RegisterComponent = () => {
         });
         setAlertMessage(errorList);
         setShowAlert(true);
-        setVariant('danger');
+        setVariant("danger");
       });
   };
 
@@ -70,41 +88,60 @@ const RegisterComponent = () => {
         )}
       </div>
       <div className="container center">
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <div className="row col-md-4 offset-2">
             <label htmlFor="username">UserName</label>
             <input
               name="username"
               type="text"
+              id="username"
               placeholder="Please Enter UserName"
               className="form-control"
-              onChange={handleChange}
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.username && formik.errors.username ? (
+              <div className="error">{formik.errors.username}</div>
+            ) : null}
             <br />
             <label htmlFor="password">Password</label>
             <input
               name="password"
               type="password"
+              id="password"
               placeholder="Please Enter Password"
               className="form-control"
-              onChange={handleChange}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.username && formik.errors.password ? (
+              <div className="error">{formik.errors.password}</div>
+            ) : null}
             <br />
-            <label htmlFor="confirmpassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">Confirm Password</label>
             <input
-              name="confirmpassword"
+              name="confirmPassword"
               type="password"
+              id="confirmPassword"
               placeholder="Please Enter Email Address"
               className="form-control"
-              onChange={handleChange}
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.username && formik.errors.confirmPassword ? (
+              <div className="error">{formik.errors.confirmPassword}</div>
+            ) : null}
           </div>
           <br />
           <div className="row col-md-4 offset-2">
             <ButtonComponent
               label="Register"
               className="btn btn-primary"
-              onButtonClick={onClickHandler}
+              isDisabled={!formik.isValid}
+              onButtonClick={formik.handleSubmit}
             ></ButtonComponent>
           </div>
         </form>
