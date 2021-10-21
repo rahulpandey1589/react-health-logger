@@ -2,7 +2,7 @@ import { PureComponent } from "react";
 
 class ButtonComponent extends PureComponent {
   render() {
-    const { className, label, isDisabled, id, onButtonClick } = this.props;
+    const { className, label, isDisabled, id, onButtonClick,type } = this.props;
 
     const handleButtonClick = ($event) => {
       $event.preventDefault();
@@ -15,6 +15,7 @@ class ButtonComponent extends PureComponent {
         onClick={handleButtonClick}
         disabled={isDisabled !== undefined ? isDisabled : false}
         className={className}
+        type={type}
       >
         {label}
       </button>
