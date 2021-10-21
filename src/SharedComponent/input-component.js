@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const InputComponent = (props) => {
   const [value, setValue] = useState("");
-  const { className, placeholder, getInputValue, name,id } = props;
+  const { className, placeholder, getInputValue, name,id,disabled } = props;
 
   const onChangeHandler = ($event) => {
     setValue($event.target.value);
@@ -20,6 +20,7 @@ const InputComponent = (props) => {
         className={className}
         type="text"
         value={value}
+        disabled={disabled}
         onChange={onChangeHandler}
         placeholder={placeholder === undefined ? `Please enter ${name}` : placeholder}
       ></input>

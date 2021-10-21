@@ -54,7 +54,6 @@ const LoginComponent = () => {
       .post("/auth/authenticate", data)
       .then((data) => {
         const { token, expiresIn, displayName, role } = data.data.response;
-
         if (data.data.success) {
           const expirationTime = new Date(
             new Date().getTime() + +expiresIn * 1000
