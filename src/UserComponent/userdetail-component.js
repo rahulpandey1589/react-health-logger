@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import AuthContext from "../Store/auth-context";
 import customAxios from "../Services/axios";
 import { useFormik } from "formik";
+import ButtonComponent from "../SharedComponent/button-component";
 
 const UserDetailComponent = () => {
   const context = useContext(AuthContext);
@@ -20,20 +21,24 @@ const UserDetailComponent = () => {
       .get(`users/find?id=${userId}`)
       .then((response) => {
         if (response.data.success) {
-          const { first_name, last_name,username } = response.data.data;
-        
+          const { first_name, last_name, username } = response.data.data;
+
           formik.setValues({
-            firstName:first_name,
-            lastName:last_name
+            firstName: first_name,
+            lastName: last_name,
           });
 
           formik.setValues({
-            username:username
-          })
+            username: username,
+          });
         }
       })
       .catch((error) => {});
   };
+
+  const updateUserDetails = () =>{
+    
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -102,6 +107,14 @@ const UserDetailComponent = () => {
               disabled="true"
               placeholder="Please Enter Date of Birth"
             />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <ButtonComponent
+              label="Update User Details"
+              className="btn btn-primary"
+            ></ButtonComponent>
           </div>
         </div>
       </div>
