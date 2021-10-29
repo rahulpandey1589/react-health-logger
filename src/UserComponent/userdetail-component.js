@@ -11,26 +11,21 @@ import DropdownComponent from "../SharedComponent/dropdown-component";
 
 const validate = (values) => {
   let errors = {};
-  const { gender, firstName, lastName, dob } = values;
+  const { gender, firstname, lastname, dob } = values;
 
-  if (!firstName) {
-    errors.firstName = "Required";
-  } else if (firstName.length < 5 || firstName.length > 15) {
-    errors.firstName =
+  if (!firstname) {
+    errors.firstname = "Required";
+  } else if (firstname.length < 5 || firstname.length > 15) {
+    errors.firstname =
       "Firstname should be greater than 5 characters and less than 15.";
   }
 
-  if (!lastName) {
+  if (!lastname) {
     errors.lastName = "Required";
-  } else if (lastName.length < 5 || lastName.length > 15) {
-    errors.firstName =
+  } else if (lastname.length < 5 || lastname.length > 15) {
+    errors.lastname =
       "Lastname should be greater than 5 characters and less than 15.";
   }
-
-  // if (gender !== "Male" || gender !== "Female") {
-  //   errors.gender = "Please select a valid value from dropdown.";
-  // }
-
   return errors;
 };
 
@@ -66,13 +61,14 @@ const UserDetailComponent = () => {
       .get(`users/find?id=${userId}`)
       .then((response) => {
         if (response.data.success) {
+          debugger;
           const { first_name, last_name, username, date_of_birth, gender } =
             response.data.data;
 
           formik.setValues({
             ...formik.values,
-            firstName: first_name,
-            lastName: last_name,
+            firstname: first_name,
+            lastname: last_name,
             username: username,
             dob: date_of_birth,
             gender: gender,
@@ -85,16 +81,19 @@ const UserDetailComponent = () => {
   };
 
   const updateUser = (values) => {
+    debugger;
     const data = {
       ...values,
-      id:userId
+      id: userId,
     };
 
     console.log(data);
     customAxios
-      .put("/users/update",data)
-      .then((response) => { 
-        debugger;
+      .put("/users/update", data)
+      .then((response) => {
+        if (response.status === 200) {
+          alert("Records Updated Successfully!!!");
+        }
       })
       .catch((error) => {
         debugger;
@@ -103,8 +102,8 @@ const UserDetailComponent = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
       dob: "",
       username: "",
       gender: "",
@@ -121,35 +120,35 @@ const UserDetailComponent = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-4">
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="firstname">First Name</label>
               <input
-                id="firstName"
-                name="firstName"
+                id="firstname"
+                name="firstname"
                 type="text"
-                value={formik.values.firstName}
+                value={formik.values.firstname}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="form-control"
                 placeholder="Please Enter FirstName"
               />
-              {formik.touched.firstName && formik.errors.firstName ? (
-                <div className="error">{formik.errors.firstName}</div>
+              {formik.touched.firstname && formik.errors.firstname ? (
+                <div className="error">{formik.errors.firstname}</div>
               ) : null}
             </div>
             <div className="col-4">
               <label htmlFor="lastName">Last Name</label>
               <input
-                id="lastName"
-                name="lastName"
+                id="lastname"
+                name="lastname"
                 type="text"
-                value={formik.values.lastName}
+                value={formik.values.lastname}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 className="form-control"
                 placeholder="Please Enter LastName"
               />
-              {formik.touched.lastName && formik.touched.lastName ? (
-                <div className="error">{formik.errors.lastName}</div>
+              {formik.touched.lastname && formik.touched.lastname ? (
+                <div className="error">{formik.errors.lastname}</div>
               ) : null}
             </div>
           </div>
