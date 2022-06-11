@@ -1,4 +1,4 @@
-FROM  node:alpine
+FROM node:16-alpine3.12
 
 LABEL author="Rahul Pandey"
 
